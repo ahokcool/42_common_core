@@ -1,1 +1,3 @@
-# 42_common_core
+# astein | 42_common_core
+
+[![astein's 42 stats](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/stats?cursusId=21&coalitionId=110)](https://github.com/JaeSeoKim/badge42)
