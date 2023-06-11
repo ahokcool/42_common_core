@@ -28,6 +28,7 @@ INCLUDE_FOLDER = ./include/
 # ->Files
 LIBFT_PRINTF = $(LIB_FOLDER)/libft_printf.a
 SRCS = $(addprefix $(SRC_FOLDER), \
+	debug.c \
 	main.c \
 	push.c \
 	swap.c \
@@ -43,7 +44,7 @@ SRCS = $(addprefix $(SRC_FOLDER), \
 OBJS = $(SRCS:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
 
 # TARGETS
-.PHONY:	$(NAME) all clean fclean re god r
+.PHONY:	$(NAME) all clean fclean re god test
 
 all: $(NAME)
 
@@ -78,5 +79,5 @@ god:
 	git commit -m " -> Makefile Commit <- "
 	git status
 
-r: re
-	./$(NAME) 8 4 1 2 5
+test: re
+	./test_1_to_5.sh

@@ -6,12 +6,11 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 14:10:54 by astein            #+#    #+#             */
-/*   Updated: 2023/06/09 16:29:27 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/11 19:15:51 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
-
 
 t_bool	is_sorted(t_stack *stack)
 {
@@ -47,20 +46,6 @@ int	stack_height(t_stack *stack)
 	return (height);
 }
 
-void	print_stack(t_stack *stack)
-{
-	if (!stack)
-		ft_printf("(null)");
-	while (stack)
-	{
-		// ft_printf("(%i [%i]) < ", stack->value, (int)stack->i);
-		// ft_printf("%i ", stack->value);
-		ft_printf("%i ", (int)stack->i);
-		stack = stack->n;
-	}
-	ft_printf("\n");
-}
-
 void	set_index(t_stack *node, long i)
 {
 	if (i == -1)
@@ -73,18 +58,6 @@ void	set_index(t_stack *node, long i)
 		node->i = (unsigned int)i;
 		node->index_set = ft_true;
 	}
-}
-
-t_stacks	*cpy_stacks(t_stacks *stacks)
-{
-	t_stacks	*cpy;
-
-	cpy = malloc(sizeof(t_stacks));
-	if (!cpy)
-		return (NULL);
-	cpy->a = cpy_stack(&stacks->a);
-	cpy->b = cpy_stack(&stacks->b);
-	return (cpy);
 }
 
 t_stack	*cpy_stack(t_stack **stack_a)
@@ -114,4 +87,16 @@ t_stack	*cpy_stack(t_stack **stack_a)
 	}
 	cpy_pointer->n = NULL;
 	return (cpy_first);
+}
+
+t_stacks	*cpy_stacks(t_stacks *stacks)
+{
+	t_stacks	*cpy;
+
+	cpy = malloc(sizeof(t_stacks));
+	if (!cpy)
+		return (NULL);
+	cpy->a = cpy_stack(&stacks->a);
+	cpy->b = cpy_stack(&stacks->b);
+	return (cpy);
 }

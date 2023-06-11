@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/10 00:29:07 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/11 19:15:11 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_stacks
 	t_stack			*b;
 }					t_stacks;
 
-
 void				ft_debug_printf(char *str, ...);
 
 //______PUSH____________________________________________________________________
@@ -52,6 +51,10 @@ long				rra(t_stack **a, t_bool print);
 long				rrb(t_stack **b, t_bool print);
 long				rrr(t_stack **a, t_stack **b, t_bool print);
 
+//______DEBUG___________________________________________________________________
+void				print_stack(t_stack *stack);
+void				dbg_end(t_stacks *stacks);
+
 //______STACK.C_________________________________________________________________
 t_stack				*ini_stack_a(int argc, char **argv);
 void				free_stack(t_stack *stack);
@@ -61,22 +64,18 @@ void				free_stacks(t_stacks *stacks);
 t_bool				is_sorted(t_stack *stack);
 int					stack_height(t_stack *stack);
 void				set_index(t_stack *node, long i);
-void				print_stack(t_stack *stack);
 t_stack				*cpy_stack(t_stack **stack_a);
+t_stacks			*cpy_stacks(t_stacks *stacks);
 
-//******************************************************************************
-//			SOLVERS -> radix.c
-//******************************************************************************
-long	sort_radix(t_stacks	*stacks, t_bool print);
+//______CHOOSE_SOLVER.C_________________________________________________________
 void				*choose_solver(t_stacks *stacks);
-t_stacks	*cpy_stacks(t_stacks *stacks);
 
+//______SORT_SMALL.C____________________________________________________________
 void				sort_two(t_stacks	*stacks);
 void				sort_three(t_stacks	*stacks);
-void				sort_four(t_stacks	*stacks);
 void				sort_five(t_stacks	*stacks);
 
-void	dbg_end(t_stacks *stacks);
-void	smart_rotate2sort(t_stack **stack);
+//______SORT_RADIX.C____________________________________________________________
+long				sort_radix(t_stacks	*stacks, t_bool print);
 
 #endif
