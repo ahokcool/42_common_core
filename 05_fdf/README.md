@@ -16,7 +16,7 @@
 
 
 
-Note following symbols have a map in ```./maps/letters/```:
+note: following symbols have a map in ```./maps/letters/```:
 
 ```./fdf 'abc...xyz'```
 ![abc.png](https://github.com/0815-alex/fdf/blob/master/img/abc.png)
