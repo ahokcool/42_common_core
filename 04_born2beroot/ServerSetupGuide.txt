@@ -1,0 +1,81 @@
+Set up server
+
+WORDPRESS:
+--------------------------------
+sudo apt install lighttpd
+sudo ufw allow 80
+sudo ufw status
+-> VM Port erlauben
+sudo apt install wget zip
+cd /var/www/
+sudo wget https://wordpress.org/latest.zip
+sudo unzip latest.zip
+sudo mv html/ html_old/
+sudo mv wordpress/ html
+sudo rm -f latest.zip
+sudo chmod -R 755 html
+
+MARIADB:
+--------------------------------
+sudo apt install mariadb-server
+sudo mysql_secure_installation
+	ENTER
+	Switch to unix_socket autentication? → N
+	Change the root password? → N
+	Remove anonymous users? → Y
+	Disallow root login remotely? → Y
+	Remove test database and acces to it? → Y
+	Reaload privilege tables now? → Y
+cd /home/astein/
+sudo mariadb
+	CREATE DATABASE wp_database;
+	SHOW DATABASES;
+	CREATE USER 'astein'@'localhost' IDENTIFIED BY 'hi8JJmaria';
+	GRANT ALL PRIVILEGES ON wp_database.* TO 'astein'@'localhost';
+	FLUSH PRIVILEGES;
+	exit
+	
+	
+PHP:
+--------------------------------
+sudo apt install php-cgi php-mysql
+
+WORDPRESS CONFIG:
+--------------------------------
+cd /var/www/html
+sudo cp wp-config-sample.php wp-config.php 
+sudo nano wp-config.php
+	define( 'DB_NAME', 'wp_database' );
+	define( 'DB_USER', 'astein' );
+	define( 'DB_PASSWORD', 'hi8JJmaria' );
+sudo lighty-enable-mod fastcgi
+sudo lighty-enable-mod fastcgi-php
+	sudo service lighttpd force-reload
+
+go to Browser:
+http://localhost/wp-admin/install.php
+
+PHP:
+--------------------------------
+php --version
+sudo apt install composer
+sudo apt install php-xml
+
+composer init --require="php >= 8.1" --no-interaction
+composer require masterminds/html5
+composer update
+
+create php file
+
+composer require guzzlehttp/guzzle
+composer require fabpot/goutte
+
+cd somewhere/phantomJS
+sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+tar xvf phantomjs-*.tar.bz2
+chmod +x phantomjs-2.1.1-linux-x86_64/bin/phantomjs
+rm -f phantomjs-2.1.1-linux-x86_64.tar.bz2
+nano ~/.bashrc
+	export PATH="/mnt/data/GIT/born2beRoot/PHP/phantomJS/phantomjs-2.1.1-linux-x86_64/bin/:$PATH"
+source ~/.bashrc
+

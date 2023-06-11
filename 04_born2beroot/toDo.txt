@@ -1,0 +1,6 @@
+- Server aufsetzen			- DONE
+- Script beim anmelden anzeigen	- 
+- Alles checken anhand fragebogen
+- signature speichern
+- den ganzen bumms in github pushen?
+- change pswd

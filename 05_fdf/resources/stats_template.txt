@@ -1,0 +1,5 @@
+STATS | TRANS ROT ZOOM    | AUTO
+------|------------------------------------------------
+    x | 112 	12  129   | on  rotate
+    y | 112	12  129   | off color change
+    z | -       12  109.0 |
