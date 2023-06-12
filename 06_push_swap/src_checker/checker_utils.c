@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:08:51 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 20:47:31 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 21:20:02 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,10 @@ static void	set_all_actions(t_all_actions	*all_actions)
 static t_all_actions	*ini_actions(void)
 {
 	t_all_actions	*all_actions;
-	// int				i;
 
 	all_actions = malloc(sizeof(t_all_actions));
 	if (!all_actions)
 		dbg_printf(err_block, "malloc failed!");
-	// i = 0;
-	// while (i < 10)
-	// {
-	// 	all_actions[i] = malloc(sizeof(s_action));
-	// 	if (!all_actions[i])
-	// 		dbg_print(err_block, "malloc failed!");
-	// 	i++;
-	// }
 	set_all_actions(all_actions);
 	return (all_actions);
 }
@@ -80,7 +71,8 @@ static void	call_action(t_stacks *stacks, char *cmd, t_all_actions *all_actions)
 	action_ptr = NULL;
 	while (i < 11)
 	{
-		if (ft_strncmp(all_actions->a[i].name, cmd, ft_strlen(cmd) -1) == 0)// && cmd[ft_strlen(cmd) - 1] == '\n')
+		if (ft_strncmp(all_actions->a[i].name, cmd, ft_strlen(cmd) - 1) == 0
+			&& cmd[ft_strlen(cmd) - 1] == '\n')
 			action_ptr = all_actions->a[i].action;
 		i++;
 	}
@@ -89,39 +81,6 @@ static void	call_action(t_stacks *stacks, char *cmd, t_all_actions *all_actions)
 	else
 		dbg_printf(err_block, "Error");
 }
-
-// void	str2action(t_stacks *stacks, char *cmd)
-// {
-// 	(void)stacks;
-// 	if (ft_strlen(cmd) == 3)
-// 	{
-// 		if (ft_strncmp(cmd[0], "p", 1) == 0)
-// 		{
-// 			if (ft_strncmp(cmd[1], "a", 1) == 0)
-// 				pa(stacks, ft_false);
-// 			else if (ft_strncmp(cmd[1], "b", 1) == 0)
-// 				pb(stacks, ft_false);
-// 		}
-// 		if (ft_strncmp(cmd[0], "r", 1) == 0)
-// 		{
-			
-// 		}
-// 	}
-// 	else if (ft_strlen(cmd) == 4)
-// 	{
-// 		if (ft_strncmp(cmd, "rr", 2) == 0)
-// 		{
-// 			if (ft_strncmp(cmd[2], "a", 1) == 0)
-// 				rra(stacks, ft_false);
-// 			else if (ft_strncmp(cmd[2], "b", 1) == 0)
-// 				rrb(stacks, ft_false);
-// 			else if (ft_strncmp(cmd[2], "r", 1) == 0)
-// 				rrr(stacks, ft_false);
-// 		}
-// 	}
-// 	else
-// 		dbg_printf(err_block, "Error");
-// }
 
 void	start_check(t_stacks *stacks)
 {
