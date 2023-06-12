@@ -15,10 +15,10 @@ CINCLUDES  = -I$(INCLUDE_FOLDER)
 RM = rm -f
 
 # Color codes
-GREEN = \033[0;32m
-RED = \033[0;31m
-ORANGE = \033[0;33m
 RESET = \033[0m
+RED = \033[0;31m
+GREEN = \033[0;32m
+ORANGE = \033[0;33m
 
 # ->Folders
 SRC_FOLDER = ./src/
@@ -29,7 +29,7 @@ LIB_FOLDER = ./lib/
 INCLUDE_FOLDER = ./include/
 
 # ->Files
-LIBFT_PRINTF = $(LIB_FOLDER)/libft_printf.a
+LIBFT_PRINTF = $(LIB_FOLDER)libft_printf.a
 SRCS = $(addprefix $(SRC_FOLDER), \
 	main.c \
 	check_argv.c \
@@ -46,18 +46,18 @@ SRCS = $(addprefix $(SRC_FOLDER), \
 
 SRCS_CHECKER = $(addprefix $(SRC_FOLDER_CHECKER), \
 	main.c \
-	checker.c)
+	checker_utils.c)
 
 # Object files
 OBJS = $(SRCS:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
 OBJS_CHECKER = $(SRCS_CHECKER:$(SRC_FOLDER_CHECKER)%.c=$(OBJS_FOLDER_CHECKER)%.o)
 
 # TARGETS
-.PHONY:	$(NAME) all clean fclean re test checker
+.PHONY:	$(NAME) all clean fclean re test check
 
 all: $(NAME)
 
-checker: $(NAME_CHECKER)
+check: all $(NAME_CHECKER)
 
 $(NAME): $(OBJS) $(LIBFT_PRINTF)
 	@$(CC) $(OBJS) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME)
@@ -69,12 +69,12 @@ $(NAME_CHECKER): $(OBJS) $(OBJS_CHECKER) $(LIBFT_PRINTF)
 
 $(OBJS_FOLDER)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
-	@echo -n "."
+	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJS_FOLDER_CHECKER)%.o: $(SRC_FOLDER_CHECKER)%.c
 	@mkdir -p $(@D)
-	@echo -n "."
+	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_PRINTF):
@@ -96,5 +96,5 @@ fclean: clean
 
 re: fclean all
 
-test: re
+test: check
 	./tests/test_1_to_5.sh

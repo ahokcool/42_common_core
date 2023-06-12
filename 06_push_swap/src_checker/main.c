@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:48:46 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 16:48:56 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:19:38 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	if (!stacks->a)
 		return (1);
 	dbg_printf(no_block, "stack height: %i", stack_height(stacks->a));
-	//hier checkern
+	start_check(stacks);
 	free_stacks(stacks);
 	return (0);
 }

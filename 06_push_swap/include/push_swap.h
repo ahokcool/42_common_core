@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 16:42:40 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:02:55 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ long				pa(t_stacks *stacks, t_bool print);
 long				pb(t_stacks *stacks, t_bool print);
 
 //______SWAP____________________________________________________________________
-long				sa(t_stack **a, t_bool print);
-long				sb(t_stack **b, t_bool print);
-long				ss(t_stack **a, t_stack **b, t_bool print);
+long				sa(t_stacks *stacks, t_bool print);
+long				sb(t_stacks *stacks, t_bool print);
+long				ss(t_stacks *stacks, t_bool print);
 
 //______ROTATE__________________________________________________________________
-long				ra(t_stack **a, t_bool print);
-long				rb(t_stack **b, t_bool print);
-long				rr(t_stack **a, t_stack **b, t_bool print);
+long				ra(t_stacks *stacks, t_bool print);
+long				rb(t_stacks *stacks, t_bool print);
+long				rr(t_stacks *stacks, t_bool print);
 
 //______REVERSE ROTATE__________________________________________________________
-long				rra(t_stack **a, t_bool print);
-long				rrb(t_stack **b, t_bool print);
-long				rrr(t_stack **a, t_stack **b, t_bool print);
+long				rra(t_stacks *stacks, t_bool print);
+long				rrb(t_stacks *stacks, t_bool print);
+long				rrr(t_stacks *stacks, t_bool print);
 
 //______CHECK_ARGV.C____________________________________________________________
 void				check_args(int argc, char **argv);

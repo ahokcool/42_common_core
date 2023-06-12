@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 14:10:27 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:30:19 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:28:57 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,18 @@ void	free_stack(t_stack *stack)
 		free(stack);
 		stack = buf;
 	}
-	free(buf);
+	if (buf)
+		free(buf);
 }
 
 void	free_stacks(t_stacks *stacks)
 {
-	free_stack(stacks->a);
-	free_stack(stacks->b);
-	free(stacks);
+	if (stacks)
+	{
+		if (stacks->a)
+			free_stack(stacks->a);
+		if (stacks->b)
+			free_stack(stacks->b);
+		free(stacks);
+	}
 }

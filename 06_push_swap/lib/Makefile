@@ -11,8 +11,9 @@ ifndef DEBUG
 endif
 
 # Color codes
-GREEN = \033[0;32m
 RED = \033[0;31m
+GREEN = \033[0;32m
+ORANGE = \033[0;33m
 RESET = \033[0m
 
 # Library name and source files
@@ -92,7 +93,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_FOLDER)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
-	@echo -n "."
+	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -DDEBUG=$(DEBUG) -c $< -o $@
 
 

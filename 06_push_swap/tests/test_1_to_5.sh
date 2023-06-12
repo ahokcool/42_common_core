@@ -1,5 +1,9 @@
 #!/bin/bash
 
+NAME_PUSHSWAP="./push_swap"
+NAME_CHECKER_OWN="./checker"
+NAME_CHECKER_42="./checker_linux"
+
 limit_2=5
 limit_3=5
 limit_4=12
@@ -173,144 +177,36 @@ combinations_5=(
     "4 3 2 1 0"
 )
 
-echo -e "\ntest 2 digits | limit: $limit_2\n-------------------------------------"
-for comb in "${combinations_2[@]}"; do
-    result=$(./push_swap $comb | wc -l)
-	output=$(./push_swap $comb | ./checker_linux $comb)
-		if [[ $result -le $limit_2 ]]; then
-			echo -ne "${green}$comb -> $result${reset}"
-		else
-			echo -ne "${red}$comb -> $result${reset}"
-		fi
-		if [[ $output == "OK" ]]; then
-			echo -e " | checker: ${green}OK${reset}"
-		else
-			echo -e " | checker: ${red}KO${reset}"
-		fi
-    
-done
+for ((N=2; N<=5; N++)); do
 
-echo -e "\ntest 3 digits | limit: $limit_3\n-------------------------------------"
-for comb in "${combinations_3[@]}"; do
-    result=$(./push_swap $comb | wc -l)
-	output=$(./push_swap $comb | ./checker_linux $comb)
-		if [[ $result -le $limit_3 ]]; then
-			echo -ne "${green}$comb -> $result${reset}"
-		else
-			echo -ne "${red}$comb -> $result${reset}"
-		fi
-		if [[ $output == "OK" ]]; then
-			echo -e " | checker: ${green}OK${reset}"
-		else
-			echo -e " | checker: ${red}KO${reset}"
-		fi
-    
-done
+	cur_comb="combinations_$N[@]"
+	cur_limit="limit_$N"
 
-echo -e "\ntest 4 digits | limit: $limit_4\n-------------------------------------"
-for comb in "${combinations_4[@]}"; do
-    result=$(./push_swap $comb | wc -l)
-	output=$(./push_swap $comb | ./checker_linux $comb)
-		if [[ $result -le $limit_4 ]]; then
-			echo -ne "${green}$comb -> $result${reset}"
-		else
-			echo -ne "${red}$comb -> $result${reset}"
-		fi
-		if [[ $output == "OK" ]]; then
-			echo -e " | checker: ${green}OK${reset}"
-		else
-			echo -e " | checker: ${red}KO${reset}"
-		fi
-    
-done
+	echo -e "\n$N NUMBERS | LIMIT: ${!cur_limit}\n---------------------"
+	for comb in "${!cur_comb}"; do
+	    count_actions=$($NAME_PUSHSWAP $comb | wc -l)
+		res_checker_42=$($NAME_PUSHSWAP $comb | $NAME_CHECKER_42 $comb)
+		res_checker_own=$($NAME_PUSHSWAP $comb | $NAME_CHECKER_OWN $comb)
 
-echo -e "\ntest 5 digits | limit: $limit_5\n-------------------------------------"
-for comb in "${combinations_5[@]}"; do
-    result=$(./push_swap $comb | wc -l)
-	output=$(./push_swap $comb | ./checker_linux $comb)
-		if [[ $result -le $limit_5 ]]; then
-			echo -ne "${green}$comb -> $result${reset}"
-		else
-			echo -ne "${red}$comb -> $result${reset}"
-		fi
-		if [[ $output == "OK" ]]; then
-			echo -e " | checker: ${green}OK${reset}"
-		else
-			echo -e " | checker: ${red}KO${reset}"
-			echo -e $(./push_swap $comb)
-		fi
-    
+	#check if limit is fine
+			if [[ $count_actions -le ${!cur_limit} ]]; then
+				echo -ne "$comb -> | count: ${green}$(printf "%02d" "$count_actions")${reset}"
+			else
+				echo -ne "${red}$comb -> $count_actions${reset}"
+			fi
+
+	#check if 42 checker is fine
+			if [[ $res_checker_42 == "OK" ]]; then
+				echo -ne " | 42 checker: ${green}OK${reset}"
+			else
+				echo -ne " | 42 checker: ${red}KO${reset}"
+			fi
+
+	#check if own checker is fine
+			if [[ $res_checker_own == $res_checker_42 ]]; then
+				echo -e " | own checker is working?: ${green}YES${reset}"
+			else
+				echo -e " | own checker is working?: ${red}NO${reset}"
+			fi
+	done
 done
-#echo -e "\ntest 2 digits | limit: $limit_2\n-------------------------------------"
-#for comb in "${combinations_2[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -le $limit_2 ]]; then
-#        echo -e "${green}$comb -> $result${reset}"
-#		
-#    fi
-#done
-#echo -e "\ntest 3 digits | limit: $limit_3\n-------------------------------------"
-#for comb in "${combinations_3[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -le $limit_3 ]]; then
-#        echo -e "${green}$comb -> $result${reset}"
-#    fi
-#done
-#echo -e "\ntest 4 digits | limit: $limit_4\n-------------------------------------"
-#for comb in "${combinations_4[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -le $limit_4 ]]; then
-#        echo -e "${green}$comb -> $result${reset}"
-#    fi
-#done
-#echo -e "\ntest 5 digits | limit: $limit_5\n-------------------------------------"
-#for comb in "${combinations_5[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -le $limit_5 ]]; then
-#		output=$(./push_swap $comb | ./checker_linux $comb)
-#		if [[ $output == "OK" ]]; then
-#    	    echo -ne "${green}$comb -> $result${reset}"
-#			echo -e " | checker: ${green}OK${reset}"
-#		fi
-#    fi
-#done
-#
-#echo ""
-#echo -e "${red}=========\n   KO\n=========\n${reset}"
-#echo -e "\ntest 2 digits | limit: $limit_2\n-------------------------------------"
-#for comb in "${combinations_2[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -gt $limit_2 ]]; then
-#        echo -e "${red}$comb -> $result${reset}"
-#    fi
-#done
-#echo -e "\ntest 3 digits | limit: $limit_3\n-------------------------------------"
-#for comb in "${combinations_3[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -gt $limit_3 ]]; then
-#        echo -e "${red}$comb -> $result${reset}"
-#    fi
-#done
-#echo -e "\ntest 4 digits | limit: $limit_4\n-------------------------------------"
-#for comb in "${combinations_4[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#    if [[ $result -gt $limit_4 ]]; then
-#        echo -e "${red}$comb -> $result${reset}"
-#    fi
-#done
-#echo -e "\ntest 5 digits | limit: $limit_5\n-------------------------------------"
-#for comb in "${combinations_5[@]}"; do
-#    result=$(./push_swap $comb | wc -l)
-#	output=$(./push_swap $comb | ./checker_linux $comb)
-#		if [[ $result -le $limit_5 ]]; then
-#			echo -ne "${green}$comb -> $result${reset}"
-#		else
-#			echo -ne "${red}$comb -> $result${reset}"
-#		fi
-#		if [[ $output == "OK" ]]; then
-#			echo -e " | checker: ${green}OK${reset}"
-#		else
-#			echo -e " | checker: ${red}KO${reset}"
-#		fi
-#    
-#done

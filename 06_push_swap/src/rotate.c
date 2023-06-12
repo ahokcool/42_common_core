@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:45:44 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:15:41 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:05:16 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@ static void	rotate(t_stack **stack)
 	}
 }
 
-long	ra(t_stack **a, t_bool print)
+long	ra(t_stacks *stacks, t_bool print)
 {
-	rotate(a);
+	rotate(&stacks->a);
 	if (print)
 		ft_printf("ra\n");
 	return (1);
 }
 
-long	rb(t_stack **b, t_bool print)
+long	rb(t_stacks *stacks, t_bool print)
 {
-	rotate(b);
+	rotate(&stacks->b);
 	if (print)
 		ft_printf("rb\n");
 	return (1);
 }
 
-long	rr(t_stack **a, t_stack **b, t_bool print)
+long	rr(t_stacks *stacks, t_bool print)
 {
-	rotate(a);
-	rotate(b);
+	rotate(&stacks->a);
+	rotate(&stacks->b);
 	if (print)
 		ft_printf("rr\n");
 	return (1);

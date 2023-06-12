@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:09:46 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 15:21:33 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:07:41 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	sort_by_bit(t_stacks *stacks, int bit, long *count, t_bool print)
 		if (((stacks->a->i >> bit) & 1) == 0)
 			*count += pb(stacks, print);
 		else
-			*count += ra(&stacks->a, print);
+			*count += ra(stacks, print);
 		i++;
 	}
 }

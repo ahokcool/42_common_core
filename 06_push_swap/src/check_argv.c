@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:27:50 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 15:28:08 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:59:33 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*check_args_number(char *a)
 	char	*b;
 
 	b = ft_itoa(ft_atoi(a));
+	// ft_printf("a: %s | b: %s\n", a, b);
 	if (ft_strlen(a) != ft_strlen(b) || ft_strncmp(a, b, ft_strlen(a) != 0))
 		dbg_printf(err_block, "Error");
 	return (b);
@@ -53,16 +54,16 @@ static void	check_args_duplicate(int i, char *a, char **argv)
 void	check_args(int argc, char **argv)
 {
 	int		i;
-	char	*c;
+	char	*a;
 
 	i = 1;
 	if (argc <= 1)
 		dbg_printf(err_block, "Error");
 	while (i < argc)
 	{
-		c = check_args_number(argv[i]);
-		check_args_duplicate(i, c, argv);
-		free(c);
+		a = check_args_number(argv[i]);
+		check_args_duplicate(i, a, argv);
+		free(a);
 		i++;
 	}
 }
