@@ -74,6 +74,8 @@ int	main(void)
 	{
 		printf("a: %s", line_a);
 		printf("b: %s\n", line_b);
+		free(line_a);
+		free(line_b);
 		line_a = get_next_line(fd_a);
 		line_b = get_next_line(fd_b);
 	}

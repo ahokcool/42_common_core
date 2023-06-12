@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:30:03 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:16:05 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 15:02:36 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*choose_solver(t_stacks *stacks)
 	count_moves[0] = sort_radix(cpy, ft_false);
 	dbg_printf(no_block, "radix sort mooves: %i", count_moves[0]);
 	free_stacks(cpy);
-	if (count_moves[0] <= count_moves[0])
+	// if (count_moves[0] <= count_moves[0])
 		sort_radix(stacks, ft_true);
 	return (NULL);
 }

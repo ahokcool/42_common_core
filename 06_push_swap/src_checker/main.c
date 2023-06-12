@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 19:51:54 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 15:28:06 by astein           ###   ########.fr       */
+/*   Created: 2023/06/12 16:48:46 by astein            #+#    #+#             */
+/*   Updated: 2023/06/12 16:48:56 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../include/checker.h"
 
 int	main(int argc, char **argv)
 {
@@ -25,8 +25,7 @@ int	main(int argc, char **argv)
 	if (!stacks->a)
 		return (1);
 	dbg_printf(no_block, "stack height: %i", stack_height(stacks->a));
-	if (!is_sorted(stacks->a))
-		choose_solver(stacks);
+	//hier checkern
 	free_stacks(stacks);
 	return (0);
 }

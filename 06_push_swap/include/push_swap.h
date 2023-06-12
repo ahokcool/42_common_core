@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:15:11 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 16:42:40 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_stacks
 void				ft_debug_printf(char *str, ...);
 
 //______PUSH____________________________________________________________________
-long				pa(t_stack **a, t_stack **b, t_bool print);
-long				pb(t_stack **a, t_stack **b, t_bool print);
+long				pa(t_stacks *stacks, t_bool print);
+long				pb(t_stacks *stacks, t_bool print);
 
 //______SWAP____________________________________________________________________
 long				sa(t_stack **a, t_bool print);
@@ -51,7 +51,10 @@ long				rra(t_stack **a, t_bool print);
 long				rrb(t_stack **b, t_bool print);
 long				rrr(t_stack **a, t_stack **b, t_bool print);
 
-//______DEBUG___________________________________________________________________
+//______CHECK_ARGV.C____________________________________________________________
+void				check_args(int argc, char **argv);
+
+//______DEBUG.C_________________________________________________________________
 void				print_stack(t_stack *stack);
 void				dbg_end(t_stacks *stacks);
 

@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:02:46 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:07:40 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/12 15:20:57 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ void	sort_five(t_stacks	*stacks)
 	if (stack_height(stacks->a) == 5)
 	{
 		push_to_top(&stacks->a, 0);
-		pb(&stacks->a, &stacks->b, ft_true);
+		pb(stacks, ft_true);
 		push_to_top(&stacks->a, 1);
-		pb(&stacks->a, &stacks->b, ft_true);
+		pb(stacks, ft_true);
 		sort_three(stacks);
-		pa(&stacks->a, &stacks->b, ft_true);
-		pa(&stacks->a, &stacks->b, ft_true);
+		pa(stacks, ft_true);
+		pa(stacks, ft_true);
 	}
 	else
 		dbg_printf(err_block, "sort 5 function with a stack != 5 elements!");
