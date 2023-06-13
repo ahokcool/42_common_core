@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:30:03 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 15:02:36 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:35:20 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static t_bool	check_small_numbers(t_stacks *stacks)
 	if (amount_of_numbers == 2)
 		sort_two(stacks);
 	else if (amount_of_numbers == 3)
-		sort_three(stacks);
+		sort_three(stacks, ft_true);
+	else if (amount_of_numbers == 4)
+		sort_radix(stacks, ft_true);
 	else if (amount_of_numbers == 5)
-		sort_five(stacks);
+		sort_five(stacks, ft_true);
 	else
 		is_small = ft_false;
 	return (is_small);
@@ -39,15 +41,21 @@ static t_bool	check_small_numbers(t_stacks *stacks)
 void	*choose_solver(t_stacks *stacks)
 {
 	t_stacks	*cpy;
-	int			count_moves[1];
+	int			count_moves[2];
 
 	if (check_small_numbers(stacks))
 		return (NULL);
 	cpy = cpy_stacks(stacks);
 	count_moves[0] = sort_radix(cpy, ft_false);
-	dbg_printf(no_block, "radix sort mooves: %i", count_moves[0]);
 	free_stacks(cpy);
-	// if (count_moves[0] <= count_moves[0])
+	cpy = cpy_stacks(stacks);
+	count_moves[1] = sort_best_friend(cpy, ft_false);
+	free_stacks(cpy);
+	if (count_moves[0] <= count_moves[1])
 		sort_radix(stacks, ft_true);
+	else
+		sort_best_friend(stacks, ft_true);
+	dbg_printf(no_block, "radix sort mooves: %i", count_moves[0]);
+	dbg_printf(no_block, "best friend sort mooves: %i", count_moves[1]);
 	return (NULL);
 }

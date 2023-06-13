@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 14:10:54 by astein            #+#    #+#             */
-/*   Updated: 2023/06/11 19:15:51 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 17:32:54 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,38 @@ void	set_index(t_stack *node, long i)
 	}
 }
 
-t_stack	*cpy_stack(t_stack **stack_a)
+/*
+	0	t_stack	*buf;
+	1	t_stack	*cpy_first;
+	2	t_stack	*cpy_pointer;
+*/
+t_stack	*cpy_stack(t_stack **stack)
 {
-	t_stack	*buf;
-	t_stack	*cpy_first;
-	t_stack	*cpy_pointer;
+	t_stack	*buf[3];
 
-	cpy_first = malloc(sizeof(t_stack));
-	if (!cpy_first)
+	if (!*stack)
 		return (NULL);
-	buf = *stack_a;
-	cpy_pointer = cpy_first;
-	while (buf)
+	buf[1] = malloc(sizeof(t_stack));
+	if (!buf[1])
+		return (NULL);
+	buf[0] = *stack;
+	buf[2] = buf[1];
+	while (buf[0])
 	{
-		cpy_pointer->value = buf->value;
-		cpy_pointer->i = buf->i;
-		cpy_pointer->index_set = buf->index_set;
-		buf = buf->n;
-		if (buf)
+		buf[2]->value = buf[0]->value;
+		buf[2]->i = buf[0]->i;
+		buf[2]->index_set = buf[0]->index_set;
+		buf[0] = buf[0]->n;
+		if (buf[0])
 		{
-			cpy_pointer->n = malloc(sizeof(t_stack));
-			if (!cpy_pointer->n)
+			buf[2]->n = malloc(sizeof(t_stack));
+			if (!buf[2]->n)
 				return (NULL);
-			cpy_pointer = cpy_pointer->n;
+			buf[2] = buf[2]->n;
 		}
 	}
-	cpy_pointer->n = NULL;
-	return (cpy_first);
+	buf[2]->n = NULL;
+	return (buf[1]);
 }
 
 t_stacks	*cpy_stacks(t_stacks *stacks)

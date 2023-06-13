@@ -42,7 +42,9 @@ SRCS = $(addprefix $(SRC_FOLDER), \
 	stack_utils.c \
 	choose_solver.c \
 	sort_radix.c \
-	sort_small.c)
+	sort_small.c \
+	sort_best_friend.c \
+	sort_best_friend_utils.c)
 
 SRCS_CHECKER = $(addprefix $(SRC_FOLDER_CHECKER), \
 	main.c \

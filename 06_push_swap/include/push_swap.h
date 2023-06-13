@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 20:02:55 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:06:36 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_stack
 	unsigned int	i;
 	t_bool			index_set;
 	struct s_stack	*n;
+	struct s_stack	*bf;
+	long			bf_c;
 }					t_stack;
 
 typedef struct s_stacks
@@ -56,6 +58,7 @@ void				check_args(int argc, char **argv);
 
 //______DEBUG.C_________________________________________________________________
 void				print_stack(t_stack *stack);
+void				print_stacks(t_stacks *stacks);
 void				dbg_end(t_stacks *stacks);
 
 //______STACK.C_________________________________________________________________
@@ -75,10 +78,20 @@ void				*choose_solver(t_stacks *stacks);
 
 //______SORT_SMALL.C____________________________________________________________
 void				sort_two(t_stacks	*stacks);
-void				sort_three(t_stacks	*stacks);
-void				sort_five(t_stacks	*stacks);
+long				sort_three(t_stacks	*s, t_bool print);
+long				sort_five(t_stacks	*stacks, t_bool print);
 
 //______SORT_RADIX.C____________________________________________________________
 long				sort_radix(t_stacks	*stacks, t_bool print);
+
+//______SORT_BEST_FRIEND.C______________________________________________________
+long				sort_best_friend(t_stacks	*stacks, t_bool print);
+
+//______SORT_BEST_FRIEND_UTILS.C________________________________________________
+double				get_mean_value(t_stack *stack);
+long				calc_to_top(t_stacks *stacks, unsigned int a, unsigned int b,
+						t_bool do_it, t_bool print);
+void				do_best_friend(t_stacks *stacks, t_bool print,
+						long *count_actions);
 
 #endif

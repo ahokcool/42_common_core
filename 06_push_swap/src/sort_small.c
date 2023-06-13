@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:02:46 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 20:13:04 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 17:34:50 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,32 @@ void	sort_two(t_stacks	*stacks)
 		ra(stacks, ft_true);
 }
 
-void	sort_three(t_stacks	*s)
+long	sort_three(t_stacks	*s, t_bool print)
 {
-	int		a;
-	int		b;
-	int		c;
+	int		buf[3];
+	long	count_actions;
 
-	a = s->a->i;
-	b = s->a->n->i;
-	c = s->a->n->n->i;
-	if (a > b && b < c && c > a)
-		sa(s, ft_true);
-	else if (a > b && b < c && c < a)
-		ra(s, ft_true);
-	else if (a < b && b > c && c < a)
-		rra(s, ft_true);
-	else if (a > b && b > c && c < a)
+	count_actions = 0;
+	buf[0] = s->a->i;
+	buf[1] = s->a->n->i;
+	buf[2] = s->a->n->n->i;
+	if (buf[0] > buf[1] && buf[1] < buf[2] && buf[2] > buf[0])
+		count_actions += sa(s, print);
+	else if (buf[0] > buf[1] && buf[1] < buf[2] && buf[2] < buf[0])
+		count_actions += ra(s, print);
+	else if (buf[0] < buf[1] && buf[1] > buf[2] && buf[2] < buf[0])
+		count_actions += rra(s, print);
+	else if (buf[0] > buf[1] && buf[1] > buf[2] && buf[2] < buf[0])
 	{
-		sa(s, ft_true);
-		rra(s, ft_true);
+		count_actions += sa(s, print);
+		count_actions += rra(s, print);
 	}
-	else if (a < b && b > c && c > a)
+	else if (buf[0] < buf[1] && buf[1] > buf[2] && buf[2] > buf[0])
 	{
-		sa(s, ft_true);
-		ra(s, ft_true);
+		count_actions += sa(s, print);
+		count_actions += ra(s, print);
 	}
+	return (count_actions);
 }
 
 /**
@@ -56,18 +57,22 @@ void	sort_three(t_stacks	*s)
  * @param stack	the stack
  * @param i 	the index that should be brought on top
  */
-static void	push_to_top(t_stacks *stacks, unsigned int i)
+static long	push_to_top(t_stacks *stacks, unsigned int i, t_bool print)
 {
+	long	count_actions;
+
+	count_actions = 0;
 	if (stacks->a->i == i || stacks->a->n->i == i || stacks->a->n->n->i == i)
 	{
 		while (stacks->a->i != i)
-			ra(stacks, ft_true);
+			count_actions += ra(stacks, print);
 	}
 	else
 	{
 		while (stacks->a->i != i)
-			rra(stacks, ft_true);
+			count_actions += rra(stacks, print);
 	}
+	return (count_actions);
 }
 
 /*
@@ -78,18 +83,22 @@ static void	push_to_top(t_stacks *stacks, unsigned int i)
 	pa
 	
 */
-void	sort_five(t_stacks	*stacks)
+long	sort_five(t_stacks	*stacks, t_bool print)
 {
+	long	count_actions;
+
+	count_actions = 0;
 	if (stack_height(stacks->a) == 5)
 	{
-		push_to_top(stacks, 0);
-		pb(stacks, ft_true);
-		push_to_top(stacks, 1);
-		pb(stacks, ft_true);
-		sort_three(stacks);
-		pa(stacks, ft_true);
-		pa(stacks, ft_true);
+		count_actions += push_to_top(stacks, 0, print);
+		count_actions += pb(stacks, print);
+		count_actions += push_to_top(stacks, 1, print);
+		count_actions += pb(stacks, print);
+		count_actions += sort_three(stacks, print);
+		count_actions += pa(stacks, print);
+		count_actions += pa(stacks, print);
 	}
 	else
 		dbg_printf(err_block, "sort 5 function with a stack != 5 elements!");
+	return (count_actions);
 }
