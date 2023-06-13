@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:48:46 by astein            #+#    #+#             */
-/*   Updated: 2023/06/12 17:19:38 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 20:36:58 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	if (!stacks)
 		return (1);
 	stacks->b = NULL;
-	check_args(argc, argv);
+	check_args(argc, argv, stacks);
 	stacks->a = ini_stack_a(argc, argv);
 	if (!stacks->a)
 		return (1);

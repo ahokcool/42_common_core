@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/13 18:44:05 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 20:36:18 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ long				rrb(t_stacks *stacks, t_bool print);
 long				rrr(t_stacks *stacks, t_bool print);
 
 //______CHECK_ARGV.C____________________________________________________________
-void				check_args(int argc, char **argv);
+void				check_args(int argc, char **argv, t_stacks *stacks);
 
 //______DEBUG.C_________________________________________________________________
 void				print_stack(t_stack *stack);
