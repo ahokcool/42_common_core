@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 14:51:04 by astein            #+#    #+#             */
-/*   Updated: 2023/06/13 18:02:24 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 19:28:56 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ long	sort_best_friend(t_stacks	*stacks, t_bool print)
 	}
 	count_actions += sort_three(stacks, print);
 	while (stack_height(stacks->b) > 0)
+	{
 		do_best_friend(stacks, print, &count_actions);
+		// print_stacks(stacks);
+	}
 	return (count_actions);
 }

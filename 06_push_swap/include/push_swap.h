@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:54:25 by astein            #+#    #+#             */
-/*   Updated: 2023/06/13 18:06:36 by astein           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:44:05 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,6 @@ long				sort_best_friend(t_stacks	*stacks, t_bool print);
 
 //______SORT_BEST_FRIEND_UTILS.C________________________________________________
 double				get_mean_value(t_stack *stack);
-long				calc_to_top(t_stacks *stacks, unsigned int a, unsigned int b,
-						t_bool do_it, t_bool print);
-void				do_best_friend(t_stacks *stacks, t_bool print,
-						long *count_actions);
+void				do_best_friend(t_stacks *ss, t_bool p, long *c);
 
 #endif
