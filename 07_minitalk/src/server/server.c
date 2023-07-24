@@ -6,13 +6,13 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:51:32 by astein            #+#    #+#             */
-/*   Updated: 2023/07/24 18:29:21 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/24 22:44:33 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minitalk.h"
 
-void	print_pid(void)
+static void	print_pid(void)
 {
 	ft_putstr_fd("\n------------------------------\n", 1);
 	ft_putstr_fd("    ASTEINS MINITALK SERVER\n", 1);
@@ -23,44 +23,40 @@ void	print_pid(void)
 	ft_putstr_fd("waiting for messages...\n", 1);
 }
 
-void	handler_usr1(int num)
+static void	handler(int signal, siginfo_t *info, void *context)
 {
-	(void)num;
-	write(1, "a", 1);
-}
+	static int	c;
+	static int	bit_shift;
 
-void	handler_usr2(int num)
-{
-	(void)num;
-	write(1, "b", 1);
+	(void)context;
+	if (signal == SIGUSR2)
+		c |= (1 << bit_shift);
+	bit_shift++;
+	if (bit_shift == 8)		
+	{
+		write(1, &c, 1);
+		bit_shift = 0;
+		// ft_printf("pid: %i", info->si_pid);
+		if(c != '\0')
+			kill(info->si_pid, SIGUSR1);
+		else
+			kill(info->si_pid, SIGUSR2);
+		c = 0;
+		// usleep(100);
+	}
 }
 
 int	main(void)
 {
-	struct sigaction	my_usr1;
-	struct sigaction	my_usr2;
+	struct sigaction	signal_action;
 
 	print_pid();
-	my_usr1.sa_handler = handler_usr1;
-	my_usr2.sa_handler = handler_usr2;
-	sigaction(SIGUSR1, &my_usr1, NULL);
-	sigaction(SIGUSR2, &my_usr2, NULL);
+	signal_action.sa_handler = 0;
+	signal_action.sa_flags = SA_SIGINFO;
+	signal_action.sa_sigaction = handler;
+
+	sigaction(SIGUSR1, &signal_action, NULL);
+	sigaction(SIGUSR2, &signal_action, NULL);
 	while (1)
-	{
-		pause();
-	}
+		;
 }
-/*
-	signal
-	sigemptyset
-	sigaddset
-	sigaction
-	kill
-	getpid
-	malloc
-	free
-	pause
-	sleep
-	usleep
-	exit
-	*/
