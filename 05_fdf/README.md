@@ -5,7 +5,7 @@
 ```
 ./fdf ./maps/nice_maps/t2.fdf
 ```
-![t2.png](https://github.com/0815-alex/fdf/blob/master/img/t2.png)
+![t2.png](./img/t2.png)
 <br />
 ### creating a map
 ```
