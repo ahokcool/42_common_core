@@ -11,7 +11,7 @@
 ```
 ./fdf astein
 ```
-![astein.png](https://github.com/0815-alex/fdf/blob/master/img/astein.png)
+![astein.png](./img/astein.png)
 
 
 
@@ -19,16 +19,16 @@
 note: following symbols have a map in ```./maps/letters/```:
 
 ```./fdf 'abc...xyz'```
-![abc.png](https://github.com/0815-alex/fdf/blob/master/img/abc.png)
+![abc.png](./img/abc.png)
 
 ```./fdf 'ABC...XYZ'```
-![ABC.png](https://github.com/0815-alex/fdf/blob/master/img/ABC.png)
+![ABC.png](./img/ABC.png)
 
 ```./fdf '01...89'```
-![012.png](https://github.com/0815-alex/fdf/blob/master/img/012.png)
+![012.png](./img/012.png)
 
 ```./fdf '?! _-.'```
-![chars.png](https://github.com/0815-alex/fdf/blob/master/img/chars.png)
+![chars.png](./img/chars.png)
 
 some of the maps in ```./maps/nice_maps/``` are from [@duarte3333](https://github.com/duarte3333/FdF_Wireframe_model/tree/main/Maps) thx!
 <br />
