@@ -6,166 +6,121 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/24 22:30:11 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:34:56 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minitalk.h"
 
-t_bool	waiting;
+t_msg	*g_msg;
 
-static void	print_pid(void)
+static void	print_header(void)
 {
 	ft_putstr_fd("\n------------------------------\n", 1);
 	ft_putstr_fd("    ASTEINS MINITALK CLIENT\n", 1);
-	ft_putstr_fd("------------------------------\n\n", 1);
-	ft_putstr_fd("server up at (PID: ", 1);
+	ft_putstr_fd("      (PID CLIENT: ", 1);
 	ft_putnbr_fd(getpid(), 1);
-	ft_putstr_fd(")\n\n", 1);
-	ft_putstr_fd("sending message:\n", 1);
+	ft_putstr_fd(")\n", 1);
+	ft_putstr_fd("      (PID SERVER: ", 1);
+	ft_putnbr_fd(g_msg->pid_server, 1);
+	ft_putstr_fd(")\n", 1);
+	ft_putstr_fd("------------------------------\n\n", 1);
+	ft_putstr_fd("start transmission...\n---\n", 1);
 }
 
-
-void	send_char(pid_t pid_server, int c)
+static void	check_args(int argc, char **argv)
 {
-	int	bit_mask;
-	int	i;
+	char	*pid_server_str;
+	int		i;
 
-	waiting = ft_true;
-	bit_mask = 1;
+	if (argc != 3)
+		dbg_printf(err_block, "param error!\n[MSG] [PID]\ne.g. \"Hi\" 12345");
 	i = 0;
-	// ft_putstr_fd("send char: ", 1);
-	// ft_putchar_fd(c, 1);
-	// ft_putstr_fd(" (", 1);
-	while (i < 8)
-	{/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 18:25:35 by astein            #+#    #+#             */
-/*   Updated: 2023/05/09 15:38:12 by astein           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../libft_printf.h"
-
-/**
- * @brief	Check if character is a white-space
- * 
- * @param 	c 
- * @return	int
- * 				1 = true
- * 				0 = false
- */
-static int	ft_is_space(unsigned char c)
-{
-	if (c == ' ')
-		return (1);
-	else if (c == '\f')
-		return (1);
-	else if (c == '\n')
-		return (1);
-	else if (c == '\r')
-		return (1);
-	else if (c == '\t')
-		return (1);
-	else if (c == '\v')
-		return (1);
-	else
-		return (0);
+	while (argv[2][i])
+	{
+		if (!ft_isdigit(argv[2][i]))
+			dbg_printf(err_block, "wrong pid! (not numeric)");
+		i++;
+	}
+	pid_server_str = ft_itoa(ft_atoi(argv[2]));
+	if (ft_strncmp(argv[2], pid_server_str, ft_strlen(argv[2]) != 0))
+		dbg_printf(err_block, "wrong pid! (not numeric)");
+	free(pid_server_str);
+	g_msg->pid_server = ft_atoi(argv[2]);
+	if (g_msg->pid_server <= 0)
+	{
+		free(g_msg);
+		dbg_printf(err_block, "wrong pid! (pid <= 0)");
+	}
+	g_msg->msg = argv[1];
+	// g_msg->msg = "Ho";
 }
 
-/**
-
- * @brief This function converts str into int removing ws in the front
- * 
- * @param str string to be converted 
- * @return int converted str
- */
-int	ft_atoi(const char *str)
+static void	send_next_char(void)
 {
-	int	result;
-	int	sign;
+	static char	cur_char;
+	static int	bit_mask;
+	static int	i;
 
-	sign = 1;
-	result = 0;
-	while (ft_is_space(*str) == 1)
-		str++;
-	if (*str == '-' || *str == '+')
+	if (i == 8)
 	{
-		if (*str == '-')
-			sign = -1;
-		str++;
+		ft_printf("%c", cur_char);
+		cur_char = 0;
+		i = 0;
 	}
-	while (*str >= '0' && *str <= '9')
+	if (!cur_char)
 	{
-		result *= 10;
-		result += *str - '0';
-		str++;
-	}
-	result = sign * result;
-	return (result);
-}
-
+		if (g_msg->msg[0] == '\0')
+		{
+			// ft_printf("send null char | bit %i\n", i);
+			kill(g_msg->pid_server, SIGUSR1);
+			return ;
+		}
 		else
 		{
-			kill(pid_server, SIGUSR1);
-			// ft_putchar_fd('1', 1);
+			cur_char = g_msg->msg[0];
+			g_msg->msg++;
+			bit_mask = 1;
+			i = 0;
 		}
-		bit_mask <<= 1;
-		i++;
-		usleep(100);
 	}
-	// ft_putstr_fd(")\n", 1);
+
+	if (cur_char & bit_mask)
+		kill(g_msg->pid_server, SIGUSR2);
+	else
+		kill(g_msg->pid_server, SIGUSR1);
+	bit_mask <<= 1;
+	// ft_printf("send char: %c | bit %i\n", cur_char, i);
+	usleep(100);
+	i++;
 }
 
-// void	send_msg(pid_t pid_server, char *msg)
-// {
-// 	(void)pid_server;
-
-// }
-
-void	handler(int signal)
+static void	handle_response(int signal)
 {
 	if (signal == SIGUSR1)
 	{
-		waiting = ft_false;
+		// write(1, "1", 1);
+		send_next_char();
 	}
-	if (signal == SIGUSR2)
+	else if (signal == SIGUSR2)
 	{
-		ft_printf("\n\nmessage delivered!\n");
-		exit(0);
+		ft_printf("\n---\nthe message was delivered successfully!\n");
+		free(g_msg);
+		exit(EXIT_SUCCESS);
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	pid_t	pid_server;
-
-	waiting = ft_false;
-	print_pid();
-	signal(SIGUSR1, handler);
-	signal(SIGUSR2, handler);
-	if (argc != 3)
-		dbg_printf(err_block, "param error!\n[MSG] [PID]\ne.g. \"Hi\" 12345");
-	if (ft_strncmp(argv[2], ft_itoa(ft_atoi(argv[2])), ft_strlen(argv[2])) != 0)
-		dbg_printf(err_block, "wrong pid!");
-	pid_server = ft_atoi(argv[2]);
-	if (pid_server <= 0)
-		dbg_printf(err_block, "wrong pid!");
-	while (argv[1])
-	{
-		ft_putchar_fd(argv[1][0], 1);
-		send_char(pid_server, argv[1][0]);
-		argv[1]++;
-		while (waiting)
-			;
-	}
-	send_char(pid_server, '\0');
-	while (waiting)
-			;
+	signal(SIGUSR1, handle_response);
+	signal(SIGUSR2, handle_response);
+	g_msg = malloc(sizeof(t_msg));
+	if (!g_msg)
+		exit(EXIT_FAILURE);
+	check_args(argc, argv);
+	print_header();
+	send_next_char();
+	while (1)
+		;
 	return (0);
 }

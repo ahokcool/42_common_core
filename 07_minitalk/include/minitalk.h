@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/24 17:42:19 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/25 13:30:22 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,11 @@
 # include "../lib/libft_printf.h"
 # include <unistd.h>
 # include <signal.h>
+
+typedef struct s_msg
+{
+	pid_t	pid_server;
+	char	*msg;
+}	t_msg;
+
 #endif
