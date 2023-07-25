@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/25 15:34:56 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:12:24 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	check_args(int argc, char **argv)
 
 static void	send_next_char(void)
 {
-	static char	cur_char;
+	static int	cur_char;
 	static int	bit_mask;
 	static int	i;
 
@@ -79,16 +79,26 @@ static void	send_next_char(void)
 		else
 		{
 			cur_char = g_msg->msg[0];
+			// write(1,"\n>",1);
+			// write(1, &cur_char, 1);
+			// write(1,"<",1);
 			g_msg->msg++;
 			bit_mask = 1;
 			i = 0;
 		}
 	}
 
+	// usleep(100);
 	if (cur_char & bit_mask)
+	{
+		// write(1,"2",1);
 		kill(g_msg->pid_server, SIGUSR2);
+	}
 	else
+	{
+		// write(1,"1",1);
 		kill(g_msg->pid_server, SIGUSR1);
+	}
 	bit_mask <<= 1;
 	// ft_printf("send char: %c | bit %i\n", cur_char, i);
 	usleep(100);
@@ -104,7 +114,7 @@ static void	handle_response(int signal)
 	}
 	else if (signal == SIGUSR2)
 	{
-		ft_printf("\n---\nthe message was delivered successfully!\n");
+		ft_printf("\n---\nmessage delivered successfully!\n");
 		free(g_msg);
 		exit(EXIT_SUCCESS);
 	}
