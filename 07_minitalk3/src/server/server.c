@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:51:32 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 01:04:41 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 01:30:48 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ static void	handler_42(int signal, siginfo_t *info, void *context)
 	else
 	{
 		// store pid if possible
-		if (g_server.queuing_count > 5)
+		if (g_server.queuing_count > 1)
 		{
 			write(1, "f", 1);
 			write(1, "\n", 1);
@@ -311,7 +311,17 @@ int	main(void)
 			ft_printf("\n📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫\n");
 			ft_printf("📫 receiving message from: %i", g_server.cur_pid);
 			ft_printf("\n📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫\n\n");
-			sleep(1);
+			sleep(3);
+			printf("activate pid: %d", g_server.cur_pid);
+			kill(SIGCONT, g_server.cur_pid);
+			sleep(3);
+			printf("activate pid: %d", g_server.cur_pid);
+			kill(SIGCONT, g_server.cur_pid);
+			sleep(3);
+			printf("activate pid: %d", g_server.cur_pid);
+			kill(SIGCONT, g_server.cur_pid);
+			sleep(3);
+			printf("activate pid: %d", g_server.cur_pid);
 			kill(SIGCONT, g_server.cur_pid);
 		}
 		sleep(1);

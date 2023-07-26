@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 01:06:15 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 01:37:54 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,17 @@ static void	transmit_next_bit(void)
 	i++;
 }
 
-static void	handle_response(int signal)
+static void	handle_response(int signal, siginfo_t *info, void *context)
 {
+	(void)context;
+	(void)info;
+	
 	if (!g_msg.found_server)
 	{
 		g_msg.found_server = 1;
 		ft_printf("\n---\nserver did respond - waiting for server to start transmission...\n");
 		kill(getpid(),SIGSTOP);
-		sleep(1);
+		sleep(5);
 		transmit_next_bit();
 	}
 	else
@@ -140,16 +143,24 @@ int	main(int argc, char **argv)
 {
 	int	i;
 
-	signal(SIGUSR1, handle_response);
-	signal(SIGUSR2, handle_response);
+	struct sigaction	signal_action;
+
+
 	ini_client(argc, argv);
+	signal_action.sa_handler = 0;
+	signal_action.sa_flags = SA_SIGINFO;
+	signal_action.sa_sigaction = handle_response;
+	sigaction(BIT_0, &signal_action, NULL);
+	sigaction(BIT_1, &signal_action, NULL);
+	// signal(SIGUSR1, handle_response);
+	// signal(SIGUSR2, handle_response);
 	print_header();
 	i = 0;
 	while (!g_msg.found_server && i < CONNECTION_ATTEMPTS)
 	{
-		ft_printf("CONNECTION ATTEMPT %i\n", i);
+		ft_printf("CONNECTION ATTEMPT (%i|%i)\n", i+1, CONNECTION_ATTEMPTS);
 		kill(g_msg.pid_server, BIT_0);
-		usleep(50000);
+		usleep(500000);
 		i++;
 	}
 	if (i == CONNECTION_ATTEMPTS)

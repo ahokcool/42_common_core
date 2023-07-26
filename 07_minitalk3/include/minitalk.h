@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 00:55:49 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 01:09:25 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <signal.h>
 # include <unistd.h>
 
-# define CONNECTION_ATTEMPTS 50
+# define CONNECTION_ATTEMPTS 10
 # define BIT_0 SIGUSR1
 # define BIT_1 SIGUSR2
 
