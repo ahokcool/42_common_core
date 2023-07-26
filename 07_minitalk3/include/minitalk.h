@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 01:09:25 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 03:42:40 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <signal.h>
 # include <unistd.h>
 
-# define CONNECTION_ATTEMPTS 10
+# define HEADER_SEP 45
+# define HEADER_WIDTH 51
+# define CONNECTION_ATTEMPTS 1
 # define BIT_0 SIGUSR1
 # define BIT_1 SIGUSR2
 
@@ -54,10 +56,12 @@ typedef struct s_server
 
 typedef struct s_server_2
 {
-	pid_t	queuing_pids[5];
-	int		queuing_count;
-	int		cur_index;
-	pid_t	cur_pid;
-}				t_server_2;
+	pid_t					queuing_pids[5];
+	int						queuing_count;
+	int						cur_index;
+	pid_t					cur_pid;
+}							t_server_2;
+
+void						create_header(char *symbol, char *msg);
 
 #endif

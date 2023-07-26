@@ -6,11 +6,11 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 01:37:54 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 03:39:35 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minitalk.h"
+#include "../include/minitalk.h"
 
 static t_msg	g_msg;
 
@@ -99,13 +99,13 @@ static void	transmit_next_bit(void)
 	// usleep(100);
 	if (cur_char & bit_mask)
 	{
-		// write(1,"2",1);
-		kill(g_msg.pid_server, SIGUSR2);
+		write(1,"1",1);
+		kill(g_msg.pid_server, BIT_1);
 	}
 	else
 	{
-		// write(1,"1",1);
-		kill(g_msg.pid_server, SIGUSR1);
+		write(1,"0",1);
+		kill(g_msg.pid_server, BIT_0);
 	}
 	bit_mask <<= 1;
 	// ft_printf("send char: %c | bit %i\n", cur_char, i);
@@ -122,8 +122,7 @@ static void	handle_response(int signal, siginfo_t *info, void *context)
 	{
 		g_msg.found_server = 1;
 		ft_printf("\n---\nserver did respond - waiting for server to start transmission...\n");
-		kill(getpid(),SIGSTOP);
-		sleep(5);
+		// sleep(5);
 		transmit_next_bit();
 	}
 	else
@@ -145,9 +144,12 @@ int	main(int argc, char **argv)
 
 	struct sigaction	signal_action;
 
-
+	create_header("=", "No WAY");
+	create_header("📌", "No WAY");
+	create_header("🖨️", "No WAY");
+	create_header("📱", "No WA");
 	ini_client(argc, argv);
-	signal_action.sa_handler = 0;
+	// signal_action.sa_handler = 0;
 	signal_action.sa_flags = SA_SIGINFO;
 	signal_action.sa_sigaction = handle_response;
 	sigaction(BIT_0, &signal_action, NULL);
@@ -158,7 +160,8 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (!g_msg.found_server && i < CONNECTION_ATTEMPTS)
 	{
-		ft_printf("CONNECTION ATTEMPT (%i|%i)\n", i+1, CONNECTION_ATTEMPTS);
+		create_header("🔗", "setting\nup\nconnection...");
+		// ft_printf("CONNECTION ATTEMPT (%i|%i)\n", i+1, CONNECTION_ATTEMPTS);
 		kill(g_msg.pid_server, BIT_0);
 		usleep(500000);
 		i++;
@@ -172,3 +175,4 @@ int	main(int argc, char **argv)
 		;
 	return (0);
 }
+

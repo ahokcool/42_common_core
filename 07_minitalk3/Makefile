@@ -23,8 +23,7 @@ ORANGE = \033[0;33m
 
 # ->Folders
 LIB_FOLDER = ./lib/
-SRC_FOLDER_SERVER = ./src/server/
-SRC_FOLDER_CLIENT = ./src/client/
+SRC_FOLDER = ./src/
 OBJS_FOLDER_SERVER = ./obj/server/
 OBJS_FOLDER_CLIENT = ./obj/client/
 
@@ -32,15 +31,17 @@ INCLUDE_FOLDER = ./include/
 
 # ->Files
 LIBFT_PRINTF = $(LIB_FOLDER)libft_printf.a
-SRCS_SERVER = $(addprefix $(SRC_FOLDER_SERVER), \
-	server.c)
+SRCS_SERVER = $(addprefix $(SRC_FOLDER), \
+	server.c \
+	minitalk_utils.c)
 
-SRCS_CLIENT = $(addprefix $(SRC_FOLDER_CLIENT), \
-	client.c)
+SRCS_CLIENT = $(addprefix $(SRC_FOLDER), \
+	client.c \
+	minitalk_utils.c)
 	
 # Object files
-OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER_SERVER)%.c=$(OBJS_FOLDER_SERVER)%.o)
-OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER_CLIENT)%.c=$(OBJS_FOLDER_CLIENT)%.o)
+OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER)%.c=$(OBJS_FOLDER_SERVER)%.o)
+OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER)%.c=$(OBJS_FOLDER_CLIENT)%.o)
 
 
 # TARGETS
@@ -58,12 +59,12 @@ $(NAME_CLIENT): $(LIBFT_PRINTF) $(OBJS_CLIENT)
 	@$(CC) $(OBJS_CLIENT) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME_CLIENT)
 	@echo "$(GREEN)\n$(NAME_CLIENT): created$(RESET)"
 
-$(OBJS_FOLDER_SERVER)%.o: $(SRC_FOLDER_SERVER)%.c
+$(OBJS_FOLDER_SERVER)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
 	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_FOLDER_CLIENT)%.o: $(SRC_FOLDER_CLIENT)%.c
+$(OBJS_FOLDER_CLIENT)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
 	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@

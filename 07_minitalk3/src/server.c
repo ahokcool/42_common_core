@@ -6,11 +6,11 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:51:32 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 01:30:48 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 02:19:14 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minitalk.h"
+#include "../include/minitalk.h"
 
 // static t_server	g_server;
 
@@ -23,6 +23,7 @@ static void	print_header(void)
 	ft_putstr_fd(")\n", 1);
 	// ft_putstr_fd("      press return (to exit\n", 1));
 	ft_printf("📭 📭 📭 📭 📭 📭 📭 📭 📭 📭 📭 📭\n\n");
+	usleep(5000);
 }
 
 // static int	load_next_queuing_msgs(void)
@@ -212,6 +213,12 @@ static void	receive_msg(int signal)
 	static int		bit_shift;
 	static t_bool	flg_end_of_msg;
 
+	if (signal == BIT_0)
+		write(1,"O",1);
+
+	if (signal == BIT_1)
+		write(1,"I",1);
+
 	if (signal == BIT_1)
 		c |= (1 << bit_shift);
 	bit_shift++;
@@ -223,6 +230,7 @@ static void	receive_msg(int signal)
 		write(1, &c, 1);
 	if (bit_shift == 8)
 	{
+		write(1,"\n",1);
 		bit_shift = 0;
 		c = (int)0;
 		usleep(100);
@@ -234,7 +242,10 @@ static void	receive_msg(int signal)
 		ft_printf("📬 end of message from: %i", g_server.cur_pid);
 		ft_printf("\n📬 📬 📬 📬 📬 📬 📬 📬 📬 📬 📬 📬\n\n");
 		print_header();
-		usleep(500);
+		// usleep(500);
+
+	exit(0);
+
 		g_server.cur_pid = 0;
 		printf("set to 0!\n");
 		printf("cur pid: %d\n", g_server.cur_pid);
@@ -255,19 +266,22 @@ static void	handler_42(int signal, siginfo_t *info, void *context)
 	else
 	{
 		// store pid if possible
-		if (g_server.queuing_count > 1)
+		if (g_server.queuing_count > 5)
 		{
 			write(1, "f", 1);
 			write(1, "\n", 1);
-			kill(BIT_0, info->si_pid);
+			kill(SIGKILL, info->si_pid);
 		}
 		else
 		{
+			kill(SIGSTOP, info->si_pid);
+			// sleep(5);
+			write(1, "e", 1);
+			write(1, "\n", 1);
 			g_server.queuing_count++;
 			g_server.queuing_pids[g_server.cur_index++] = info->si_pid;
 			if (g_server.cur_index > 4)
 				g_server.cur_index = 0;
-			kill(BIT_1, info->si_pid);
 		}
 	}
 }
@@ -285,7 +299,7 @@ int	main(void)
 	// g_server.cur_pid = 0;
 	// g_server.transmitting = ft_false;
 	print_header();
-	signal_action.sa_handler = 0;
+	// signal_action.sa_handler = 0;
 	signal_action.sa_flags = SA_SIGINFO;
 	signal_action.sa_sigaction = handler_42;
 	sigaction(BIT_0, &signal_action, NULL);
@@ -311,21 +325,22 @@ int	main(void)
 			ft_printf("\n📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫\n");
 			ft_printf("📫 receiving message from: %i", g_server.cur_pid);
 			ft_printf("\n📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫 📫\n\n");
-			sleep(3);
+			// sleep(3);
 			printf("activate pid: %d", g_server.cur_pid);
 			kill(SIGCONT, g_server.cur_pid);
-			sleep(3);
+			// sleep(3);
 			printf("activate pid: %d", g_server.cur_pid);
 			kill(SIGCONT, g_server.cur_pid);
-			sleep(3);
+			// sleep(3);
 			printf("activate pid: %d", g_server.cur_pid);
 			kill(SIGCONT, g_server.cur_pid);
-			sleep(3);
+			// sleep(3);
 			printf("activate pid: %d", g_server.cur_pid);
 			kill(SIGCONT, g_server.cur_pid);
 		}
-		sleep(1);
+		// sleep(1);
 		printf("still there > checking queue pos: %i\n", i);
+		print_header();
 		// // Process signals from the queue for each sender_pid
 		// PID_Queue_NODE* queue = PID_QUEUES_HEAD;
 		// while (PID_QUEUES_HEAD != NULL) {
