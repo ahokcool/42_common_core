@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 16:45:31 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/26 17:31:42 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@
 
 # define HEADER_SEP 45
 # define HEADER_WIDTH 51
-# define CONNECTION_ATTEMPTS 10
+# define CONNECTION_ATTEMPTS 5
 # define BIT_0 SIGUSR1
 # define BIT_1 SIGUSR2
+# define E_S EXIT_SUCCESS
+# define E_F EXIT_FAILURE
+
 
 // FOR CLIENT
 // ===============
@@ -64,5 +67,6 @@ typedef struct s_server_2
 }							t_server_2;
 
 void						put_header(char *symbol, char *msg);
+void	put_exit_header(int exit_status, char *msg);
 
 #endif
