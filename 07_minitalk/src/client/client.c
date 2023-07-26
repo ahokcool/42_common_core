@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/25 17:12:24 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:06:17 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static void	check_args(int argc, char **argv)
 		free(g_msg);
 		dbg_printf(err_block, "wrong pid! (pid <= 0)");
 	}
+	// char	test[2];
+	// test[0] = 255;
+	// test[1] = 0;
+	// g_msg->msg = ft_strcat_multi(2, test, argv[1]);
+	
 	g_msg->msg = argv[1];
 	// g_msg->msg = "Ho";
 }
@@ -62,7 +67,7 @@ static void	send_next_char(void)
 	static int	bit_mask;
 	static int	i;
 
-	if (i == 8)
+	if (i == 8 && cur_char != 0 && cur_char != 255)
 	{
 		ft_printf("%c", cur_char);
 		cur_char = 0;
@@ -107,7 +112,7 @@ static void	send_next_char(void)
 
 static void	handle_response(int signal)
 {
-	if (signal == SIGUSR1)
+	if (signal == BIT_0)
 	{
 		// write(1, "1", 1);
 		send_next_char();
@@ -115,8 +120,16 @@ static void	handle_response(int signal)
 	else if (signal == SIGUSR2)
 	{
 		ft_printf("\n---\nmessage delivered successfully!\n");
-		free(g_msg);
+		// free(g_msg->msg);
 		exit(EXIT_SUCCESS);
+	}
+	else if (signal == SIGQUIT)
+	{
+		ft_printf("\n🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨\n");
+		ft_printf("\n---\n🚨 server is busy!\n");
+		ft_printf("\n🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨\n");
+		free(g_msg);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -124,6 +137,7 @@ int	main(int argc, char **argv)
 {
 	signal(SIGUSR1, handle_response);
 	signal(SIGUSR2, handle_response);
+	signal(SIGQUIT, handle_response);
 	g_msg = malloc(sizeof(t_msg));
 	if (!g_msg)
 		exit(EXIT_FAILURE);
