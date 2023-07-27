@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/26 17:31:42 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/27 03:44:08 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,15 @@
 # define E_S EXIT_SUCCESS
 # define E_F EXIT_FAILURE
 
-
-// FOR CLIENT
-// ===============
-typedef struct s_msg
+typedef struct s_client
 {
-	pid_t					pid_server;
-	char					*msg;
-	t_bool					found_server;
-	t_bool					transmitting;
-}							t_msg;
+	pid_t	pid_server;
+	char	*msg;
+	t_bool	found_server;
+	t_bool	transmitting;
+}			t_client;
 
-// FOR SERVER
-// ===============
-typedef struct s_msg_request
-{
-	pid_t					pid_client;
-	struct s_msg_request	*next;
-
-}							t_msg_request;
-
-typedef struct s_all_msg_requests
-{
-	t_msg_request			*head;
-	t_msg_request			*tail;
-}							t_all_msg_requests;
-
-typedef struct s_server
-{
-	pid_t					cur_pid;
-	t_bool					transmitting;
-	t_all_msg_requests		*queuing_msgs;
-}							t_server;
-
-typedef struct s_server_2
-{
-	pid_t					queuing_pids[5];
-	int						queuing_count;
-	int						cur_index;
-	pid_t					cur_pid;
-}							t_server_2;
-
-void						put_header(char *symbol, char *msg);
-void	put_exit_header(int exit_status, char *msg);
+void		put_header(char *symbol, char *msg);
+void		put_exit_header(int exit_status, char *msg);
 
 #endif
