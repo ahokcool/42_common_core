@@ -77,7 +77,8 @@ SRCS = $(addprefix $(SRC_FOLDER), \
 	print_dez_to_hexa.c \
 	print_nbr.c \
 	print_ptr.c \
-	print_str.c)
+	print_str.c \
+	print_header.c)
 
 # Object files
 OBJS = $(SRCS:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)

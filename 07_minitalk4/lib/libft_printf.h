@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 13:11:36 by astein            #+#    #+#             */
-/*   Updated: 2023/06/13 20:18:01 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:59:21 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # endif
 
 # include <fcntl.h>
+# include <limits.h>
 # include <math.h>
 # include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <limits.h>
 
 //******************************************************************************
 // BUFFER SIZE FOR GET NEXT LINE
@@ -31,6 +31,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
+
+//******************************************************************************
+// PARAMS FOR print_header.c
+//******************************************************************************
+# define HEADER_SEP 45
+# define HEADER_WIDTH 51
 
 //******************************************************************************
 // Hexadecimal Value Definitions
@@ -97,6 +103,8 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				put_header(char *symbol, char *msg);
+void				put_exit_header(int exit_status, char *msg);
 
 //******************************************************************************
 //			Character Classification Functions

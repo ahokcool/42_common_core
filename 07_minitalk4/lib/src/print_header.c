@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_utils.c                                   :+:      :+:    :+:   */
+/*   print_header.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 02:19:46 by astein            #+#    #+#             */
-/*   Updated: 2023/07/27 03:53:26 by astein           ###   ########.fr       */
+/*   Created: 2023/07/27 18:57:11 by astein            #+#    #+#             */
+/*   Updated: 2023/07/27 18:59:43 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// put tis in my libft!
-// --------------------
+#include "../libft_printf.h"
 
-#include "../include/minitalk.h"
-
+/**
+ * @brief 	simple function that prints the char 'c' int 'amount' of times to the
+ * 			standard output
+ * 
+ * @param c			char to be printed 
+ * @param amount 	amount of times 'c' should be printed
+ */
 static void	print_n_times(char c, int amount)
 {
 	int	i;
@@ -27,6 +31,16 @@ static void	print_n_times(char c, int amount)
 	}
 }
 
+/**
+ * @brief	prints a line like this
+ * 
+ * 				📭---------------------------------------------------📭
+ * 
+ * 			- the first and last symbol can be modified via 'symbol'
+ * 			- the '-' char can be modified in the .h file via 'HEADER_SEP'
+ * 
+ * @param symbol
+ */
 static void	print_borders(char *symbol)
 {
 	ft_printf("%s", symbol);
@@ -34,6 +48,21 @@ static void	print_borders(char *symbol)
 	ft_printf("%s\n", symbol);
 }
 
+/**
+ * @brief	prints a header like this
+ * 
+ * 				📭---------------------------------------------------📭
+ * 				📭              ASTEINS MINITALK SERVER              📭
+ * 				📭                (PID SERVER: 9057)                 📭
+ * 				📭---------------------------------------------------📭
+ * 
+ * 			- the first and last symbol can be modified via the parm 'symbol'
+ * 			- the message can be modified via the string 'msg'
+ * 			- the '-' char can be modified in the .h file via 'HEADER_SEP'
+ * 
+ * @param symbol 
+ * @param msg 
+ */
 void	put_header(char *symbol, char *msg)
 {
 	int		cur_line;
@@ -60,6 +89,14 @@ void	put_header(char *symbol, char *msg)
 	ft_printf("\n");
 }
 
+/**
+ * @brief	prints a header *see function 'put_header' and in addition
+ * 			terminates the programm.
+ * 			the exit code can be set via 'exit_status"
+ * 
+ * @param exit_status	either EXIT_SUCCESS or EXIT_FAILURE
+ * @param msg			defines the message of 'put_header'
+ */
 void	put_exit_header(int exit_status, char *msg)
 {
 	if (exit_status == EXIT_SUCCESS)

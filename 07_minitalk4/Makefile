@@ -4,6 +4,8 @@
 NAME = minitalk
 NAME_SERVER = server
 NAME_CLIENT = client
+PID_SERVER = 0
+TEST_MSG="HELLO WORLD\nHELLO 42!"
 
 # Prints DEBUG Messages
 DEBUG = 0
@@ -24,25 +26,21 @@ ORANGE = \033[0;33m
 # ->Folders
 LIB_FOLDER = ./lib/
 SRC_FOLDER = ./src/
-OBJS_FOLDER_SERVER = ./obj/server/
-OBJS_FOLDER_CLIENT = ./obj/client/
+OBJS_FOLDER = ./obj/
 
 INCLUDE_FOLDER = ./include/
 
 # ->Files
 LIBFT_PRINTF = $(LIB_FOLDER)libft_printf.a
-SRCS_SERVER = $(addprefix $(SRC_FOLDER), \
-	server.c \
-	minitalk_utils.c)
-
-SRCS_CLIENT = $(addprefix $(SRC_FOLDER), \
-	client.c \
-	minitalk_utils.c)
+SRCS_SERVER = $(addprefix $(SRC_FOLDER), server.c)
+SRCS_CLIENT = $(addprefix $(SRC_FOLDER), client.c)
 	
 # Object files
-OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER)%.c=$(OBJS_FOLDER_SERVER)%.o)
-OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER)%.c=$(OBJS_FOLDER_CLIENT)%.o)
+OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
+OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
 
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 # TARGETS
 .PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm
@@ -59,12 +57,7 @@ $(NAME_CLIENT): $(LIBFT_PRINTF) $(OBJS_CLIENT)
 	@$(CC) $(OBJS_CLIENT) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME_CLIENT)
 	@echo "$(GREEN)\n$(NAME_CLIENT): created$(RESET)"
 
-$(OBJS_FOLDER_SERVER)%.o: $(SRC_FOLDER)%.c
-	@mkdir -p $(@D)
-	@echo -n "$(ORANGE).$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS_FOLDER_CLIENT)%.o: $(SRC_FOLDER)%.c
+$(OBJS_FOLDER)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
 	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -87,6 +80,13 @@ fclean: clean
 	@echo "$(RED)$(NAME_CLIENT): cleaned program$(RESET)"
 
 re: fclean all
+
+run: all
+	gnome-terminal --geometry=+100+100 -- bash -c "cd $(CURDIR) && sleep 2; ./server; sleep infinity" &
+	sleep 4
+	SERVER_PID=$$(pidof server); \
+	echo "$$SERVER_PID"; \
+	gnome-terminal --geometry=+700+100 -- bash -c "cd $(CURDIR) && sleep 2; ./client '$$SERVER_PID' $$SERVER_PID; sleep infinity" &
 
 norm:
 	@norminette

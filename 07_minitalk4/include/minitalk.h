@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:54:01 by astein            #+#    #+#             */
-/*   Updated: 2023/07/27 03:44:08 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:58:41 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <signal.h>
 # include <unistd.h>
 
-# define HEADER_SEP 45
-# define HEADER_WIDTH 51
 # define CONNECTION_ATTEMPTS 5
 # define BIT_0 SIGUSR1
 # define BIT_1 SIGUSR2
