@@ -1,9 +1,9 @@
 # astein | minitalk
 
 ## Connection Procedure
-to get more of an binary vibe I renamed the signals...
-```USR1``` = ```BIT_0```
-```USR2``` = ```BIT_1```
+to get more of an binary vibe I renamed the signals...<br />
+   ```USR1``` = ```BIT_0```<br />
+   ```USR2``` = ```BIT_1```<br />
 | Step																				| Client->Server					 				| Server->Client					|
 | ------------- 																	| ------------- 					 				| -------------  					|
 | say hello																			| ```BIT_0```						 		 				| ```BIT_0``` 							|
