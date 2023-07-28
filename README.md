@@ -6,7 +6,7 @@
 ## rank 0
 ## [![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883)   libft](./01_libft) 
 ## rank 1
-## [![astein's 42 ft_printf Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3072972)   ft_printf](./02_ft_printf)
+## 
 ## [![astein's 42 get_next_line Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3077522)   get_next_line](./03_get_next_line)
 ## [![astein's 42 Born2beroot Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3094208)   born2beroot](./04_born2beroot)
 ## rank 2
@@ -17,7 +17,7 @@
 |  Rank         | Project 					| Status       | 
 | ------------- | ------------- 			|------------- |
 | Rank 0  		|    libft](./01_libft))   	|[![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883) |
-| Rank 1  		| [!ft_printf](./02_ft_printf) | ![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883)
+| Rank 1  		| [!ft_printf](./02_ft_printf) | [![astein's 42 ft_printf Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3072972)](./02_ft_printf) |
 
 
 
