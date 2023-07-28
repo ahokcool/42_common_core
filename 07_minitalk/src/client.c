@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/28 03:32:15 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/28 16:29:15 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static t_client	g_client;
 
 /**
- * @brief	just printing a header to the terminal using 'put_header'
- * 
+ * @brief	just printing a header to the terminal using 'put_header' 
  */
 static void	put_header_client(void)
 {
@@ -32,6 +31,14 @@ static void	put_header_client(void)
 	free_whatever("ppp", msg, pid_server, pid_client);
 }
 
+/**
+ * @brief	transmitting bit by bit the message stored in 'g_client.msg' to the
+ * 			server with the pid 'g_client.pid_server'.
+ * 
+ * 			if the message is finished a \0 character will be transmitted to let
+ * 			the server know that the transaction is over and he can close the
+ * 			connection.
+ */
 static void	transmit_next_bit(void)
 {
 	static int	cur_char;
@@ -61,6 +68,13 @@ static void	transmit_next_bit(void)
 	i++;
 }
 
+/**
+ * @brief	-> see README.md for more info
+ * 
+ * @param signal	signal that was recieved
+ * @param info 		unused
+ * @param context 	unused
+ */
 static void	handle_response(int signal, siginfo_t *info, void *context)
 {
 	(void)context;
@@ -90,6 +104,18 @@ static void	handle_response(int signal, siginfo_t *info, void *context)
 	}
 }
 
+/**
+ * @brief	- checking if the arguments are correct
+ * 				- argv[1] the message
+ * 				- argv[2] a numeric pid > 0
+ * 
+ * 			- initializing all members of the global struct 'g_client'
+ * 			- printing the client header to the terminal
+ * 			- creating a signal handler and liking the BIT_0 and BIT_1 signals
+ * 				to the function 'handle_response'
+ * @param argc 
+ * @param argv 
+ */
 static void	ini_client(int argc, char **argv)
 {
 	static int			i;
@@ -116,6 +142,19 @@ static void	ini_client(int argc, char **argv)
 	sigaction(BIT_1, &signal_action, NULL);
 }
 
+/**
+ * @brief	- check args and initialize 'g_client' via function 'ini_client'
+ * 			- try to get a respond (BIT_0) from server a few times
+ * 				- if YES
+ * 					- ping server each second to get a go (BIT_1)
+ * 						- if YES 	-> start transmitting
+ * 						- if NO		-> try again :D
+ * 				- if NO
+ * 					- display connection error and exit
+ * 
+ * @param argc 
+ * @param argv 
+ */
 int	main(int argc, char **argv)
 {
 	int	i;

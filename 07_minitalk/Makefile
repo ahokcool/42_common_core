@@ -12,7 +12,7 @@ DEBUG = 0
 
 # Compiler options
 CC = cc
-CFLAGS = -D DEBUG=$(DEBUG) -g -Wall -Werror -Wextra -fsanitize=address -fsanitize-address-use-after-scope
+CFLAGS = -D DEBUG=$(DEBUG) -Wall -Werror -Wextra #-g -fsanitize=address -fsanitize-address-use-after-scope
 CLIBS = -L$(LIB_FOLDER) -lft_printf -lm
 CINCLUDES  = -I$(INCLUDE_FOLDER) 
 RM = rm -f
@@ -83,7 +83,7 @@ fclean: clean
 re: fclean all
 
 test: all
-	gnome-terminal --window --hide-menubar --title "ASTEINS MINITALK TESTER" --geometry=60x70+630+100 --working-directory="$(CURDIR)$(TEST_FOLDER)" -- "./run.sh" &
+	gnome-terminal --window --hide-menubar --title "ASTEINS MINITALK TESTER" --geometry=60x10+630+100 --working-directory="$(CURDIR)$(TEST_FOLDER)" -- "./run.sh" &
 
 norm:
 	@norminette
