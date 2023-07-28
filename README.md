@@ -14,10 +14,10 @@
 ## [![astein's 42 push_swap Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3096056)   push_swap](./06_push_swap)
 ## [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)   minitalk](./07_minitalk)
 
-|  Rank  | Project | Status | 
-| ------------- | ------------- |------------- |
-| Rank 0  | [![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883)   libft](./01_libft)   | (./01_libft) |
-| Rank 1  | Content Cell  |
+|  Rank         | Project 					| Status       | 
+| ------------- | ------------- 			|------------- |
+| Rank 0  		|    libft](./01_libft))   	|[![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883) |
+| Rank 1  		| Content Cell  |
 
 
 
