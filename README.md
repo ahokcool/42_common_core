@@ -17,7 +17,7 @@
 |  Rank         | Project 					| Status       | 
 | ------------- | ------------- 			|------------- |
 | Rank 0  		|    libft](./01_libft))   	|[![astein's 42 Libft Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3060883) |
-| Rank 1  		| [!ft_printf](./02_ft_printf) | [![astein's 42 ft_printf Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3072972)](./02_ft_printf) |
+| Rank 1  		| [ft_printf](./02_ft_printf) | [![astein's 42 ft_printf Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3072972)](./02_ft_printf) |
 
 
 
