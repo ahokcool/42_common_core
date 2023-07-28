@@ -13,8 +13,8 @@
 | [![astein's 42 FdF Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3095759)](./05_fdf)                        | Rank 2 | [fdf](./05_fdf)                     |
 | [![astein's 42 push_swap Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3096056)](./06_push_swap)            | Rank 2 | [push_swap](./06_push_swap)         |
 | [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./07_minitalk)              | Rank 2 | [minitalk](./07_minitalk)           |
-| [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./08_philosophers)          | Rank 3 | [philosophers](./08_philosophers)   |
-| [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./09_minishell)             | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](https://thumbs.dreamstime.com/b/pending-banner-template-ribbon-label-sign-177652799.jpg)](./08_philosophers)          | Rank 3 | [philosophers](./08_philosophers)   |
+| [![pending](https://thumbs.dreamstime.com/b/pending-banner-template-ribbon-label-sign-177652799.jpg)](./09_minishell)             | Rank 3 | [minishell](./09_minishell)         |
 
 
 
