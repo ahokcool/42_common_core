@@ -27,6 +27,7 @@ ORANGE = \033[0;33m
 LIB_FOLDER = ./lib/
 SRC_FOLDER = ./src/
 OBJS_FOLDER = ./obj/
+TEST_FOLDER = /test/
 
 INCLUDE_FOLDER = ./include/
 
@@ -43,7 +44,7 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 # TARGETS
-.PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm
+.PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm test
 
 all: $(NAME)
 
@@ -81,12 +82,8 @@ fclean: clean
 
 re: fclean all
 
-run: all
-	gnome-terminal --geometry=+100+100 -- bash -c "cd $(CURDIR) && sleep 2; ./server; sleep infinity" &
-	sleep 4
-	SERVER_PID=$$(pidof server); \
-	echo "$$SERVER_PID"; \
-	gnome-terminal --geometry=+700+100 -- bash -c "cd $(CURDIR) && sleep 2; ./client '$$SERVER_PID' $$SERVER_PID; sleep infinity" &
+test: all
+	gnome-terminal --window --hide-menubar --title "ASTEINS MINITALK TESTER" --geometry=60x70+630+100 --working-directory="$(CURDIR)$(TEST_FOLDER)" -- "./run.sh" &
 
 norm:
 	@norminette

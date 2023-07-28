@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/27 04:20:47 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/28 02:02:01 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	main(int argc, char **argv)
 	{
 		put_header("🟡", "ping server to get a 'go'...");
 		kill(g_client.pid_server, BIT_1);
-		sleep(5);
+		sleep(1);
 	}
 	while (1)
 		;
