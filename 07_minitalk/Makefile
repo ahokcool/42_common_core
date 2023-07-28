@@ -1,14 +1,13 @@
 # Makefile for minitalk
+.SILENT:
 
 # Variables
-NAME = minitalk
 NAME_SERVER = server
 NAME_CLIENT = client
 PID_SERVER = 0
-TEST_MSG="HELLO WORLD\nHELLO 42!"
 
 # Prints DEBUG Messages
-DEBUG = 0
+DEBUG = 1
 
 # Compiler options
 CC = cc
@@ -24,61 +23,58 @@ GREEN = \033[0;32m
 ORANGE = \033[0;33m
 
 # ->Folders
-LIB_FOLDER = ./lib/
 SRC_FOLDER = ./src/
+INCLUDE_FOLDER = ./include/
+LIB_FOLDER = ./lib/
 OBJS_FOLDER = ./obj/
 TEST_FOLDER = /test/
 
-INCLUDE_FOLDER = ./include/
-
 # ->Files
 LIBFT_PRINTF = $(LIB_FOLDER)libft_printf.a
-SRCS_SERVER = $(addprefix $(SRC_FOLDER), server.c)
-SRCS_CLIENT = $(addprefix $(SRC_FOLDER), client.c)
+SRCS_SERVER = $(SRC_FOLDER)server.c
+SRCS_CLIENT = $(SRC_FOLDER)client.c
 	
 # Object files
-OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
-OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
-
-mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
+OBJS_SERVER = $(OBJS_FOLDER)server.o
+OBJS_CLIENT = $(OBJS_FOLDER)client.o
 
 # TARGETS
-.PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm test
+.PHONY: all clean fclean re norm test
 
-all: $(NAME)
-
-$(NAME): $(NAME_SERVER) $(NAME_CLIENT)
+all: $(NAME_SERVER) $(NAME_CLIENT)
 
 $(NAME_SERVER): $(LIBFT_PRINTF) $(OBJS_SERVER)
-	@$(CC) $(OBJS_SERVER) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME_SERVER)
-	@echo "$(GREEN)\n$(NAME_SERVER): created$(RESET)"
+	$(CC) $(OBJS_SERVER) $(CFLAGS) $(CLIBS) $(CINCLUDES) -o $(NAME_SERVER)
+	echo "$(GREEN)$(NAME_SERVER): created$(RESET)"
 
 $(NAME_CLIENT): $(LIBFT_PRINTF) $(OBJS_CLIENT)
-	@$(CC) $(OBJS_CLIENT) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME_CLIENT)
-	@echo "$(GREEN)\n$(NAME_CLIENT): created$(RESET)"
+	$(CC) $(OBJS_CLIENT) $(CFLAGS) $(CLIBS) $(CINCLUDES) -o $(NAME_CLIENT)
+	echo "$(GREEN)$(NAME_CLIENT): created$(RESET)"
 
-$(OBJS_FOLDER)%.o: $(SRC_FOLDER)%.c
-	@mkdir -p $(@D)
-	@echo -n "$(ORANGE).$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJS_SERVER): $(SRC_FOLDER)server.c
+	mkdir -p $(OBJS_FOLDER)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_CLIENT): $(SRC_FOLDER)client.c
+	mkdir -p $(OBJS_FOLDER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_PRINTF):
-	@echo "$(ORANGE)\ncompiling: $(LIBFT_PRINTF)\n$(RESET)"
-	@$(MAKE) --no-print-directory -C $(LIB_FOLDER) DEBUG=$(DEBUG)
+	echo "$(ORANGE)compiling: $(LIBFT_PRINTF)\n$(RESET)"
+	$(MAKE) --no-print-directory -C $(LIB_FOLDER) DEBUG=$(DEBUG)
 
 clean:
-	@$(RM) $(OBJS_SERVER)
-	@echo "$(RED)$(NAME_SERVER): cleaned object files$(RESET)"
-	@$(RM) $(OBJS_CLIENT)
-	@echo "$(RED)$(NAME_CLIENT): cleaned object files$(RESET)"
+	$(RM) $(OBJS_SERVER)
+	echo "$(RED)$(NAME_SERVER): cleaned object files$(RESET)"
+	$(RM) $(OBJS_CLIENT)
+	echo "$(RED)$(NAME_CLIENT): cleaned object files$(RESET)"
 
 fclean: clean
-	@make --no-print-directory -C $(LIB_FOLDER) fclean
-	@$(RM) $(NAME_SERVER)
-	@echo "$(RED)$(NAME_SERVER): cleaned program$(RESET)"
-	@$(RM) $(NAME_CLIENT)
-	@echo "$(RED)$(NAME_CLIENT): cleaned program$(RESET)"
+	make --no-print-directory -C $(LIB_FOLDER) fclean
+	$(RM) $(NAME_SERVER)
+	echo "$(RED)$(NAME_SERVER): cleaned program$(RESET)"
+	$(RM) $(NAME_CLIENT)
+	echo "$(RED)$(NAME_CLIENT): cleaned program$(RESET)"
 
 re: fclean all
 
@@ -86,4 +82,4 @@ test: all
 	gnome-terminal --window --hide-menubar --title "ASTEINS MINITALK TESTER" --geometry=60x10+630+100 --working-directory="$(CURDIR)$(TEST_FOLDER)" -- "./run.sh" &
 
 norm:
-	@norminette
+	norminette
