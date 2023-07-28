@@ -4,6 +4,8 @@
 NAME = minitalk
 NAME_SERVER = server
 NAME_CLIENT = client
+PID_SERVER = 0
+TEST_MSG="HELLO WORLD\nHELLO 42!"
 
 # Prints DEBUG Messages
 DEBUG = 0
@@ -23,28 +25,26 @@ ORANGE = \033[0;33m
 
 # ->Folders
 LIB_FOLDER = ./lib/
-SRC_FOLDER_SERVER = ./src/server/
-SRC_FOLDER_CLIENT = ./src/client/
-OBJS_FOLDER_SERVER = ./obj/server/
-OBJS_FOLDER_CLIENT = ./obj/client/
+SRC_FOLDER = ./src/
+OBJS_FOLDER = ./obj/
+TEST_FOLDER = /test/
 
 INCLUDE_FOLDER = ./include/
 
 # ->Files
 LIBFT_PRINTF = $(LIB_FOLDER)libft_printf.a
-SRCS_SERVER = $(addprefix $(SRC_FOLDER_SERVER), \
-	server.c)
-
-SRCS_CLIENT = $(addprefix $(SRC_FOLDER_CLIENT), \
-	client.c)
+SRCS_SERVER = $(addprefix $(SRC_FOLDER), server.c)
+SRCS_CLIENT = $(addprefix $(SRC_FOLDER), client.c)
 	
 # Object files
-OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER_SERVER)%.c=$(OBJS_FOLDER_SERVER)%.o)
-OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER_CLIENT)%.c=$(OBJS_FOLDER_CLIENT)%.o)
+OBJS_SERVER = $(SRCS_SERVER:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
+OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_FOLDER)%.c=$(OBJS_FOLDER)%.o)
 
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 # TARGETS
-.PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm
+.PHONY:	$(NAME) $(NAME_SERVER) $(NAME_CLIENT) all clean fclean re norm test
 
 all: $(NAME)
 
@@ -58,12 +58,7 @@ $(NAME_CLIENT): $(LIBFT_PRINTF) $(OBJS_CLIENT)
 	@$(CC) $(OBJS_CLIENT) $(CFLAGS) -D DEBUG=$(DEBUG) $(CLIBS) $(CINCLUDES) -o $(NAME_CLIENT)
 	@echo "$(GREEN)\n$(NAME_CLIENT): created$(RESET)"
 
-$(OBJS_FOLDER_SERVER)%.o: $(SRC_FOLDER_SERVER)%.c
-	@mkdir -p $(@D)
-	@echo -n "$(ORANGE).$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS_FOLDER_CLIENT)%.o: $(SRC_FOLDER_CLIENT)%.c
+$(OBJS_FOLDER)%.o: $(SRC_FOLDER)%.c
 	@mkdir -p $(@D)
 	@echo -n "$(ORANGE).$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -86,6 +81,9 @@ fclean: clean
 	@echo "$(RED)$(NAME_CLIENT): cleaned program$(RESET)"
 
 re: fclean all
+
+test: all
+	gnome-terminal --window --hide-menubar --title "ASTEINS MINITALK TESTER" --geometry=60x70+630+100 --working-directory="$(CURDIR)$(TEST_FOLDER)" -- "./run.sh" &
 
 norm:
 	@norminette
