@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:51:32 by astein            #+#    #+#             */
-/*   Updated: 2023/07/27 19:01:11 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/28 03:32:31 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static pid_t	g_client_pid;
 
+/**
+ * @brief	just printing a header to the terminal using 'put_header'
+ * 
+ */
 static void	put_header_server(void)
 {
 	char	*msg;

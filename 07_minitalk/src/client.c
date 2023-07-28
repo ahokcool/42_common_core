@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:56:29 by astein            #+#    #+#             */
-/*   Updated: 2023/07/28 02:02:01 by astein           ###   ########.fr       */
+/*   Updated: 2023/07/28 03:32:15 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static t_client	g_client;
 
+/**
+ * @brief	just printing a header to the terminal using 'put_header'
+ * 
+ */
 static void	put_header_client(void)
 {
 	char	*msg;
