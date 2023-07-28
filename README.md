@@ -16,7 +16,7 @@
 | [![astein's 42 push_swap Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3096056)](./06_push_swap)            | Rank 2 | [push_swap](./06_push_swap)         |
 | [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./07_minitalk)              | Rank 2 | [minitalk](./07_minitalk)           |
 | [![pending](./pending.png)](./08_philosophers) | Rank 3 | [philosophers](./08_philosophers)   |
-| [![pending](./pending.png)](./08_philosophers) | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
 
 
  👍 thx to ```@JaeSeoKim``` for the [badge icons](https://github.com/JaeSeoKim/badge42) :)
