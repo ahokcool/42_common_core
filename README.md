@@ -14,7 +14,7 @@
 | [![astein's 42 push_swap Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3096056)](./06_push_swap)            | Rank 2 | [push_swap](./06_push_swap)         |
 | [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./07_minitalk)              | Rank 2 | [minitalk](./07_minitalk)           |
 | [![pending](./pending.png)](./08_philosophers)          | Rank 3 | [philosophers](./08_philosophers)   |
-| [![pending](https://api.placid.app/u/qsraj?title[text]=pending)](./09_minishell)             | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./08_philosophers)          | Rank 3 | [minishell](./09_minishell)         |
 
 
 
