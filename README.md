@@ -17,6 +17,7 @@
 | [![pending](./pending.png)](./08_philosophers) | Rank 3 | [minishell](./09_minishell)         |
 
 
+ 👍 thx to @JaeSeoKim for the [badge icons](https://github.com/JaeSeoKim/badge42) :)
 
 
 
