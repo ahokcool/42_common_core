@@ -4,10 +4,9 @@
 # Variables
 NAME_SERVER = server
 NAME_CLIENT = client
-PID_SERVER = 0
 
 # Prints DEBUG Messages
-DEBUG = 1
+DEBUG = 0
 
 # Compiler options
 CC = cc
