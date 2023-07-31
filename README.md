@@ -15,7 +15,13 @@
 | [![astein's 42 FdF Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3095759)](./05_fdf)                        | Rank 2 | [fdf](./05_fdf)                     |
 | [![astein's 42 push_swap Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3096056)](./06_push_swap)            | Rank 2 | [push_swap](./06_push_swap)         |
 | [![astein's 42 minitalk Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3112131)](./07_minitalk)              | Rank 2 | [minitalk](./07_minitalk)           |
-| [![pending](./pending.png)](./08_philosophers) | Rank 3 | [philosophers](./08_philosophers)   |
+| [![astein's 42 Exam Rank 02 Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3104734)](https://projects.intra.42.fr/projects/exam-rank-02)| Rank 2 | EXAM RANK 2 |
+| [![astein's 42 Philosophers Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3205535)](./08_philosophers)      | Rank 3 | [philosophers](./08_philosophers)   |
+| [![astein's 42 minishell Score](https://badge42.vercel.app/api/v2/clipcdl9g003008ju3zj0h44e/project/3205536)](./09_mimishell)            | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
+| [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
 | [![pending](./pending.png)](./09_mimishell) | Rank 3 | [minishell](./09_minishell)         |
 
 
