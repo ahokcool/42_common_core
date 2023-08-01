@@ -4,12 +4,9 @@
 # Variables
 NAME = philo
 
-# Prints DEBUG Messages
-DEBUG = 1
-
 # Compiler options
 CC = cc
-CFLAGS = -D DEBUG=$(DEBUG) -Wall -Werror -Wextra #-g -fsanitize=address -fsanitize-address-use-after-scope
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address -fsanitize-address-use-after-scope
 RM = rm -f
 
 # Color codes
@@ -19,13 +16,18 @@ GREEN = \033[0;32m
 ORANGE = \033[0;33m
 
 # ->Files
-SRCS = philo.c
+SRCS = \
+	main.c \
+	philo.c \
+	utils.c \
+	check.c \
+	dining_table.c
 	
 # Object files
 OBJS = $(SRCS:.c=.o)
 
 # TARGETS
-.PHONY: all clean fclean re norm bonus
+.PHONY: all clean fclean re norm bonus run
 
 all: $(NAME)
 
@@ -46,5 +48,7 @@ re: fclean all
 bonus:
 	echo to do
 
+run: all
+	./$(NAME) 4 410 200 200
 norm:
 	norminette
