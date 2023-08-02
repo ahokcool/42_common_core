@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/01 23:10:17 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:09:21 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ typedef enum e_bool
 	TRUE
 }			t_bool;
 
+typedef struct s_philo
+{
+	int		number;
+	//Each philosopher has a number ranging from 1 to number_of_philosophers.
+	t_bool	state;
+	t_bool	has_left_fork;
+	t_bool	has_right_fork;
+	struct s_philo	*left_philo;
+	struct s_philo	*right_philo;
+}			t_philo;
+
 typedef struct s_dining_table
 {
 	int		num_philos;
@@ -42,14 +53,9 @@ typedef struct s_dining_table
 	long	time_eat;
 	long	time_sleep;
 	int		times_each_philo_must_eat;
-
+	t_philo	*philos;
 }			t_dining_table;
 
-typedef struct s_philo
-{
-	int		number;
-	//Each philosopher has a number ranging from 1 to number_of_philosophers.
-}			t_philo;
 
 void		ft_putstr(char *s);
 void		ini_dining_table(t_dining_table *dining_table, int argc,
