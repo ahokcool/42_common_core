@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:05:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/02 18:11:47 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/04 23:43:50 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ini_dining_table(t_dining_table *dining_table, int argc, char **argv)
 {
 	dining_table->num_philos = (int)ft_atol(argv[1]);
-	dining_table->time_die = ft_atol(argv[2]);
-	dining_table->time_eat = ft_atol(argv[3]);
-	dining_table->time_sleep = ft_atol(argv[4]);
+	dining_table->duration_die = ft_atol(argv[2]);
+	dining_table->duration_eat = ft_atol(argv[3]);
+	dining_table->duration_sleep = ft_atol(argv[4]);
 	dining_table->times_each_philo_must_eat = -2;
 	if (argc == 6)
 		dining_table->times_each_philo_must_eat = ft_atol(argv[5]);

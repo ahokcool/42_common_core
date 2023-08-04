@@ -6,7 +6,8 @@ NAME = philo
 
 # Compiler options
 CC = cc
-CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address -fsanitize-address-use-after-scope
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address 
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
 RM = rm -f
 
 # Color codes
@@ -19,6 +20,7 @@ ORANGE = \033[0;33m
 SRCS = \
 	main.c \
 	philo.c \
+	philos.c \
 	utils.c \
 	check.c \
 	dining_table.c

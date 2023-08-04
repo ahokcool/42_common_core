@@ -6,13 +6,14 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/02 18:09:21 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 00:08:13 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -33,37 +34,49 @@ typedef enum e_bool
 {
 	FALSE,
 	TRUE
-}			t_bool;
+}					t_bool;
 
 typedef struct s_philo
 {
-	int		number;
+	int				number;
 	//Each philosopher has a number ranging from 1 to number_of_philosophers.
-	t_bool	state;
-	t_bool	has_left_fork;
-	t_bool	has_right_fork;
+	int			state;
+	pthread_mutex_t	m_state;
+	struct timeval	t_last_meal;
+	t_bool			has_left_fork;
+	t_bool			has_right_fork;
 	struct s_philo	*left_philo;
 	struct s_philo	*right_philo;
-}			t_philo;
+	int				count_meals;
+	pthread_mutex_t	*m_print;
+}					t_philo;
 
 typedef struct s_dining_table
 {
-	int		num_philos;
-	long	time_die;
-	long	time_eat;
-	long	time_sleep;
-	int		times_each_philo_must_eat;
-	t_philo	*philos;
-}			t_dining_table;
+	int				num_philos;
+	long			duration_die;
+	long			duration_eat;
+	long			duration_sleep;
+	struct timeval	t_start;
+	struct timeval	t_curr;
+	int				times_each_philo_must_eat;
+	pthread_mutex_t	m_print;
+	int				amount_of_phillos_done_eating;
+	t_philo			*philos;
+}					t_dining_table;
+
+//UTILS
+long				ft_atol(char *a);
+void				print_msg(t_philo *philo, char *msg);
+
+//PHILOS
 
 
-void		ft_putstr(char *s);
-void		ini_dining_table(t_dining_table *dining_table, int argc,
-				char **argv);
-void		init_philos(t_dining_table *dining_table);
-long		ft_atol(char *a);
-void		check_times_gt_zero(t_dining_table *dining_table);
-void		check_philos_gt_zero(t_dining_table *dining_table);
-void	check_each_philo_must_eat(t_dining_table *dining_table);
+void				ini_dining_table(t_dining_table *dining_table, int argc,
+						char **argv);
+void				init_philos(t_dining_table *dining_table);
+void				check_times_gt_zero(t_dining_table *dining_table);
+void				check_philos_gt_zero(t_dining_table *dining_table);
+void				check_each_philo_must_eat(t_dining_table *dining_table);
 
 #endif
