@@ -6,35 +6,20 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:20:27 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 06:51:26 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 20:49:04 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// //an idea for the forks
-// pthread_mutex_t mutex;
-
-// void *philo_start_livin(void *arg) {
-// 	pthread_mutex_lock(&mutex); // Lock the mutex
-// 	pthread_mutex_unlock(&mutex); // Unlock the mutex
-// 	return (NULL);
-// }
-
-// struct timeval currentTime;
-// gettimeofday(&currentTime, NULL);
-
-// pthread_t tid;
-// pthread_mutex_init(&mutex, NULL); // Initialize the mutex
-// pthread_create(&tid, NULL, philo_start_livin, NULL);
-//last parameter can pass data to the thread so maybe i will pass the forks
-// pthread_join(tid, NULL); // Wait for the thread to finish
-// pthread_mutex_destroy(&mutex); // Destroy the mutex
-
 void	exit_program(t_dining_table *dining_table, t_bool success)
 {
-	sleep(1);
-	printf("start exit program %d\n", success);
+	join_philos(dining_table);
+	// sleep(1);
+	if (success)
+		print_additional_msg(NULL, "exit_program\n", dining_table, CLR_GREEN);
+	else
+		print_additional_msg(NULL, "exit_program\n", dining_table, CLR_RED);
 	if (dining_table)
 	{
 		free_dining_table(dining_table);
@@ -64,10 +49,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	ini_dining_table(dining_table, argc, argv);
 	ini_philos(dining_table);
-	gettimeofday(&dining_table->t_start, NULL);
-	printf("dinner_starts!\n");
-	dining_table->dinner_started = TRUE;
-	// join_philos(dining_table);
+	// sleep(1);
+	set_dinner_start(dining_table);
 	while (1)
 	{
 		// printf("   -> check");
@@ -82,6 +65,6 @@ int	main(int argc, char **argv)
 			set_dinner_over(dining_table);
 			exit_program(dining_table, TRUE);
 		}
-		usleep(1000);
+		// usleep(100);
 	}
 }

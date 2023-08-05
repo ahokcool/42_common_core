@@ -3,11 +3,13 @@
 
 # Variables
 NAME = philo
+TEST_ARGS=20 1000 20 30 21
+PRINT_MORE_INFOS=1	# if 1, print more infos about the program during execution
 
 # Compiler options
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope 
-# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope 
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPRINT_MORE_INFOS=$(PRINT_MORE_INFOS)
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope -DPRINT_MORE_INFOS=$(PRINT_MORE_INFOS)
 RM = rm -f
 
 # Color codes
@@ -23,13 +25,18 @@ SRCS = \
 	philos.c \
 	utils.c \
 	check.c \
-	dining_table.c
-	
+	dining_table.c \
+	lib_utils_1.c \
+	lib_utils_2.c \
+	lib_utils_3.c \
+	ft_lstclear.c \
+	ft_free.c 
+
 # Object files
 OBJS = $(SRCS:.c=.o)
 
 # TARGETS
-.PHONY: all clean fclean re norm bonus run
+.PHONY: all clean fclean re norm bonus run run_count
 
 all: $(NAME)
 
@@ -51,6 +58,9 @@ bonus:
 	echo to do
 
 run: re
-	./$(NAME) 7 410 200 200 3
+	./$(NAME) $(TEST_ARGS)
+
+run_count: re
+	./$(NAME) $(TEST_ARGS) | ./tests/count_meals.sh  
 norm:
 	norminette
