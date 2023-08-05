@@ -6,8 +6,8 @@ NAME = philo
 
 # Compiler options
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address 
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope 
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope 
 RM = rm -f
 
 # Color codes
@@ -50,7 +50,7 @@ re: fclean all
 bonus:
 	echo to do
 
-run: all
+run: re
 	./$(NAME) 4 410 200 200
 norm:
 	norminette

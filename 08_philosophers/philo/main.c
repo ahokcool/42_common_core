@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:20:27 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 00:06:52 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 04:58:51 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@
 
 void	exit_program(t_dining_table *dining_table, t_bool success)
 {
+	printf("start exit program %d\n", success);
 	if (dining_table)
 	{
-		free(dining_table);
+		free_dining_table(dining_table);
 	}
 	if (success)
 		exit(EXIT_SUCCESS);
@@ -61,12 +62,17 @@ int	main(int argc, char **argv)
 	if (!dining_table)
 		return (EXIT_FAILURE);
 	ini_dining_table(dining_table, argc, argv);
-	init_philos(dining_table);
-
-
-	while(1)
+	ini_philos(dining_table);
+	gettimeofday(&dining_table->t_start, NULL);
+	printf("dinner_starts!\n");
+	dining_table->dinner_started = TRUE;
+	// join_philos(dining_table);
+	while (1)
 	{
-		//check if any philo died
+		if (check_if_any_philo_died(dining_table))
+			exit_program(dining_table, FALSE);
+		if(check_if_all_philo_have_eaten_enough(dining_table))
+			exit_program(dining_table, TRUE);
 		usleep(1000);
 	}
 }

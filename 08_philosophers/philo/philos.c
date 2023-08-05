@@ -6,12 +6,13 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 23:53:01 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 00:01:54 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 05:00:11 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "philo.h"
 
-void	init_philos(t_dining_table *dining_table)
+void	ini_philos(t_dining_table *dining_table)
 {
 	int		i;
 	t_philo	*cur_philo;
@@ -23,7 +24,7 @@ void	init_philos(t_dining_table *dining_table)
 		cur_philo = malloc(sizeof(t_philo));
 		if (!cur_philo)
 		{
-			ft_putstr("Error: mallocing space for philo");
+			print_msg(NULL, "Error: mallocing space for philo");
 			exit(EXIT_FAILURE);
 		}
 		cur_philo->state = THINKING;
@@ -32,8 +33,10 @@ void	init_philos(t_dining_table *dining_table)
 		cur_philo->number = i;
 		cur_philo->count_meals = 0;
 		cur_philo->t_last_meal = dining_table->t_start;
-		cur_philo->m_print = &dining_table->m_print;
-		prev_philo->right_philo = cur_philo;
+		cur_philo->duration_die = dining_table->duration_die;
+		cur_philo->duration_eat = dining_table->duration_eat;
+		cur_philo->duration_sleep = dining_table->duration_sleep;
+		cur_philo->dining_table = dining_table;
 		if (i == 1)
 			dining_table->philos = cur_philo;
 		else if (i == dining_table->num_philos)
@@ -48,25 +51,21 @@ void	init_philos(t_dining_table *dining_table)
 			prev_philo->right_philo = cur_philo;
 			cur_philo->left_philo = prev_philo;
 		}
-		prev_philo = cur_philo;
-	
-
-		CONTINUE HERE TO INIYIALIZE THE THREADS
-	
 		// pthread_mutex_init(&mutex, NULL); // Initialize the mutex
-		// pthread_create(&tid, NULL, philo_start_livin, NULL);
-		// pthread_join(tid, NULL); // Wait for the thread to finish
+		if (pthread_create(&cur_philo->tid, NULL, life_of_philo,
+				cur_philo) != 0)
+		{
+			print_msg(NULL, "Error: creating thread");
+			exit(EXIT_FAILURE);
+		}
 		// pthread_mutex_destroy(&mutex); // Destroy the mutex
+		prev_philo = cur_philo;
+		cur_philo = NULL;
 		i++;
 	}
-	// External functs. memset, printf, malloc, free, write,
-	// usleep, gettimeofday, pthread_create,
-	// pthread_detach, pthread_join, pthread_mutex_init,
-	// pthread_mutex_destroy, pthread_mutex_lock,
-	// pthread_mutex_unlock
 }
 
-t_bool check_if_any_philo_died(t_dining_table *dining_table)
+void	join_philos(t_dining_table *dining_table)
 {
 	int		i;
 	t_philo	*cur_philo;
@@ -75,18 +74,73 @@ t_bool check_if_any_philo_died(t_dining_table *dining_table)
 	while (i <= dining_table->num_philos)
 	{
 		cur_philo = dining_table->philos;
-		pthread_mutex_lock(&cur_philo->m_state);
+		pthread_join(cur_philo->tid, NULL);
+		cur_philo = cur_philo->right_philo;
+		i++;
+	}
+}
+
+t_bool	check_if_any_philo_died(t_dining_table *dining_table)
+{
+	int		i;
+	t_philo	*cur_philo;
+
+	i = 1;
+	cur_philo = dining_table->philos;
+	while (i <= dining_table->num_philos)
+	{
+		pthread_mutex_lock(&cur_philo->m_philo);
 		if (cur_philo->state == DIED)
 		{
-			
-			pthread_mutex_lock(&dining_table->m_print);
-			printf("%ld %d %s\n", get_time(dining_table), cur_philo->number, MSG_DIED);
-			pthread_mutex_unlock(&dining_table->m_print);
+			pthread_mutex_lock(&dining_table->m_dinner_over);
+			dining_table->dinner_over = TRUE;
+			pthread_mutex_unlock(&dining_table->m_dinner_over);
+			print_msg(cur_philo, MSG_DIED);
 			return (TRUE);
 		}
-		pthread_mutex_unlock(&cur_philo->m_state);
+		// printf("philo no %d is %d\n", cur_philo->number, cur_philo->state);
+		pthread_mutex_unlock(&cur_philo->m_philo);
 		cur_philo = cur_philo->right_philo;
 		i++;
 	}
 	return (FALSE);
+}
+
+t_bool	check_if_all_philo_have_eaten_enough(t_dining_table *dining_table)
+{
+	int		i;
+	t_philo	*cur_philo;
+
+	if (dining_table->times_each_philo_must_eat == -2)
+		return (FALSE);
+	i = 1;
+	cur_philo = dining_table->philos;
+	while (i <= dining_table->num_philos)
+	{
+		pthread_mutex_lock(&cur_philo->m_philo);
+		if (cur_philo->count_meals < dining_table->times_each_philo_must_eat)
+		{
+			pthread_mutex_unlock(&cur_philo->m_philo);
+			return (FALSE);
+		}
+		pthread_mutex_unlock(&cur_philo->m_philo);
+		cur_philo = cur_philo->right_philo;
+		i++;
+	}
+	return (TRUE);
+}
+
+void	free_philos(t_dining_table *dining_table)
+{
+	t_philo	*cur_philo;
+
+	printf("start free philos\n");
+	while (dining_table->philos != NULL)
+	{
+		cur_philo = dining_table->philos;
+		printf("free philo no %d", cur_philo->number);
+		dining_table->philos = dining_table->philos->right_philo;
+		free_philo(cur_philo);
+		free(cur_philo);
+	}
 }

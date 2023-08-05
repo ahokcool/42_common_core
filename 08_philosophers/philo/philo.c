@@ -6,49 +6,52 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:35:53 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 00:11:39 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 04:57:46 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void start_eating(t_philo *philo)
+static void	start_thinking(t_philo *philo)
 {
-	struct timeval	t_curr;
-
-	gettimeofday(&t_curr, NULL);
-	if (philo->has_left_fork == FALSE)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		philo->has_left_fork = TRUE;
-		print_msg(philo, "has taken a fork");
-	}
-	if (philo->has_right_fork == FALSE)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		philo->has_right_fork = TRUE;
-		print_msg(philo, "has taken a fork");
-	}
-	if (philo->has_left_fork == TRUE && philo->has_right_fork == TRUE)
-	{
-		philo->state = EATING;
-		print_msg(philo, "is eating");
-		philo->t_last_meal = t_curr.tv_usec;
-		philo->count_meals++;
-		usleep(philo->dining_table->duration_eat * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-		philo->has_left_fork = FALSE;
-		philo->has_right_fork = FALSE;
-	}
+	pthread_mutex_lock(&philo->m_philo);
+	print_msg(philo, MSG_THINK);
+	philo->state = EATING;
+	pthread_mutex_unlock(&philo->m_philo);
 }
 
-void	life_of_philo(void *arg)
+static void	start_eating(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->m_philo);
+	print_msg(philo, MSG_EAT);
+	gettimeofday(&philo->t_last_meal, NULL);
+	philo->count_meals++;
+	// test
+	if (philo->number == 1)
+		philo->state = EATING;
+	else
+		philo->state = DIED;
+	pthread_mutex_unlock(&philo->m_philo);
+	usleep(philo->duration_eat * 1000);
+}
+
+static void	start_sleeping(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->m_philo);
+	print_msg(philo, MSG_SLEEP);
+	philo->state = THINKING;
+	pthread_mutex_unlock(&philo->m_philo);
+	usleep(philo->duration_sleep * 1000);
+}
+
+void	*life_of_philo(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->state != DIED)
+	while (dinning_started(philo->dining_table) == FALSE)
+		usleep(100);
+	while (philo->state != DIED && dinner_over(philo->dining_table) == FALSE)
 	{
 		if (philo->state == THINKING)
 			start_eating(philo);
@@ -56,6 +59,11 @@ void	life_of_philo(void *arg)
 			start_sleeping(philo);
 		else if (philo->state == SLEEPING)
 			start_thinking(philo);
-		}
 	}
+	return (NULL);
+}
+
+void	free_philo(t_philo *philo)
+{
+	pthread_mutex_destroy(&philo->m_philo);
 }
