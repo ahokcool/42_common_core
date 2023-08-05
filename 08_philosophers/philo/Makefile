@@ -51,6 +51,6 @@ bonus:
 	echo to do
 
 run: re
-	./$(NAME) 4 410 200 200
+	./$(NAME) 7 410 200 200 3
 norm:
 	norminette

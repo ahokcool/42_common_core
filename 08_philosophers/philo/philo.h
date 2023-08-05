@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 05:01:02 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/05 06:41:02 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define MSG_FORK " has taken a fork"
-# define MSG_EAT " is eating"
-# define MSG_SLEEP " is sleeping"
-# define MSG_THINK " is thinking"
-# define MSG_DIED " died"
+# define MSG_FORK "has taken a fork"
+# define MSG_EAT "is eating"
+# define MSG_SLEEP "is sleeping"
+# define MSG_THINK "is thinking"
+# define MSG_DIED "died"
 
 # define EATING 0
 # define SLEEPING 1
@@ -42,13 +42,14 @@ typedef struct s_philo
 	//Each philosopher has a number ranging from 1 to number_of_philosophers.
 	pthread_t				tid;
 	pthread_mutex_t			m_philo;
+	pthread_mutex_t			m_fork;
 	int						state;
 	long					duration_die;
 	long					duration_eat;
 	long					duration_sleep;
 	struct timeval			t_last_meal;
-	t_bool					has_left_fork;
-	t_bool					has_right_fork;
+	// t_bool					has_left_fork;
+	// t_bool					has_right_fork;
 	struct s_philo			*left_philo;
 	struct s_philo			*right_philo;
 	int						count_meals;
@@ -79,9 +80,10 @@ typedef struct s_dining_table
 }							t_dining_table;
 
 //UTILS
-long						ft_atol(char *a);
+long int	get_time_diff(struct timeval *t_start,
+						struct timeval *t_end);
 void						print_msg(t_philo *philo, char *msg);
-void						free_philo(t_philo *philo);
+long						ft_atol(char *a);
 
 //PHILOS
 void						ini_philos(t_dining_table *dining_table);
@@ -92,10 +94,12 @@ void						free_philos(t_dining_table *dining_table);
 
 //PHILO
 void						*life_of_philo(void *arg);
+void						free_philo(t_philo *philo);
 
 //DINNING TABLE
 t_bool						dinning_started(t_dining_table *dining_table);
-t_bool						dinner_over(t_dining_table *dining_table);
+t_bool						is_dinner_over(t_dining_table *dining_table);
+void						set_dinner_over(t_dining_table *dining_table);
 void						free_dining_table(t_dining_table *dining_table);
 
 void	ini_dining_table(t_dining_table *dining_table,
