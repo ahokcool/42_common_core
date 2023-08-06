@@ -1,9 +1,17 @@
 # Makefile for philosophers
-#.SILENT:
+.SILENT:
 
 # Variables
 NAME = philo
-TEST_ARGS=10 2800 200 200	# args for testing
+
+# args for testing
+TEST_ARGS_1=1 800 200 200
+TEST_ARGS_2=5 800 200 200
+TEST_ARGS_3=5 800 200 200 7 | ./tests/count_meals.sh
+TEST_ARGS_4=4 410 200 200
+TEST_ARGS_5=4 310 200 100
+TEST_ARGS_6=2 300 200 100 42
+
 PUT_MORE_INFOS=0			# if 1, print more infos about the program during execution
 
 # Compiler options
@@ -57,12 +65,63 @@ fclean: clean
 
 re: fclean all
 
-run: PUT_MORE_INFOS=1
-run: re
-	./$(NAME) $(TEST_ARGS)
+enable_pretty:
+	$(eval PUT_MORE_INFOS = 1)
 
-run_count: PUT_MORE_INFOS=0
-run_count: re
-	./$(NAME) $(TEST_ARGS) | ./tests/count_meals.sh  
+disable_pretty:
+	$(eval PUT_MORE_INFOS = 0)
+
+run_1: enable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_1)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	He should die...\n"
+	@echo "------------------------------------------------------------"
+	./$(NAME) $(TEST_ARGS_1)
+
+run_2: enable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_2)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	No one dies!\n"
+	@echo "------------------------------------------------------------"
+	sleep 5
+	./$(NAME) $(TEST_ARGS_2)
+
+run_3: disable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_3)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	No one dies and stop after 7 meals...\n"
+	@echo "------------------------------------------------------------"
+	./$(NAME) $(TEST_ARGS_3)
+
+run_4: enable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_4)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	No one dies!\n"
+	@echo "------------------------------------------------------------"
+	sleep 5
+	./$(NAME) $(TEST_ARGS_4)
+
+run_5: enable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_5)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	Someone dies!\n"
+	@echo "------------------------------------------------------------"
+	sleep 5
+	./$(NAME) $(TEST_ARGS_5)
+
+run_6: enable_pretty re
+	@echo "------------------------------------------------------------"
+	@echo -n "ARGUMENTS:\t$(TEST_ARGS_6)" | tr ' ' ' '
+	@echo  ""
+	@echo -n "RESULT:\t	Check timesstamps...\n"
+	@echo "------------------------------------------------------------"
+	sleep 5
+	./$(NAME) $(TEST_ARGS_6)
+
 norm:
 	norminette

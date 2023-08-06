@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 04:41:41 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 05:45:37 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 06:58:54 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static const char	*get_msg_with_clr(int msg_id)
 {
 	if (msg_id == MSG_ID_FORK)
-		return ("\033[0;32mhas taken a fork\033[0m");
+		return ("\033[0;31mhas taken a fork\033[0m");
 	if (msg_id == MSG_ID_FORK_DROP)
-		return ("\033[0;31mhas dropped a fork\033[0m");
+		return ("\033[0;32mhas dropped a fork\033[0m");
 	if (msg_id == MSG_ID_EAT)
 		return ("\033[0;33mis eating\033[0m");
 	if (msg_id == MSG_ID_FINISHED_EAT)

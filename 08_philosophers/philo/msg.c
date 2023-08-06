@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:22:34 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:10:14 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 07:00:34 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	put_msg_id(t_philo *philo, int msg_id, int fork)
 		printf("%ld %d %s", get_time_diff(&philo->table->t_start),
 				philo->id, get_msg(msg_id));
 		if (PUT_MORE_INFOS && msg_id == MSG_ID_FORK)
-			printf("%s\t%d%s", CLR_GREEN, fork, CLR_RESET);
+			printf("%s: %d%s", CLR_RED, fork, CLR_RESET);
 		if (PUT_MORE_INFOS && msg_id == MSG_ID_FORK_DROP)
-			printf("%s\t%d%s", CLR_RED, fork, CLR_RESET);
+			printf("%s: %d%s", CLR_GREEN, fork, CLR_RESET);
 		printf("\n");
 		pthread_mutex_unlock(&philo->table->m_print);
 	}

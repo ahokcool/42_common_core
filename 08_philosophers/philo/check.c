@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:09:12 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:18:24 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 06:26:26 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	get_meal_diff(t_philo *philo)
 // wird nur aufgerufen wenn parameter gesetzt wurde
 t_bool	check_if_eaten_enough(t_philo *philo)
 {
-	if (get_meal_diff(philo) <= 0)
+	if (get_meal_diff(philo) >= 0)
 		return (TRUE);
 	return (FALSE);
 }
