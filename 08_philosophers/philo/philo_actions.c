@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 01:01:28 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 02:59:12 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 03:26:33 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // https://en.wikipedia.org/wiki/Dining_philosophers_problem
 t_bool	request_for_forks(t_philo *philo)
 {
-	if (philo->left_philo->id < philo->id)
+	if (philo->right_philo->id > philo->id)
 	{
 		pthread_mutex_lock(&philo->m_fork);
 		if (has_ended(philo->table))

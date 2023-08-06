@@ -6,22 +6,37 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:22:34 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 02:59:59 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 03:48:41 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	print_tab(char *msg)
+// static void	print_tab(char *msg)
+// {
+// 	if (msg[10] == 'e')
+// 		printf("\t\t\t\t");
+// 	else if (msg[10] == ';')
+// 		printf("\t\t\t\t\t\t\t");
+// 	else if (msg[10] == 't')
+// 		printf("\t\t\t\t\t\t\t\t\t\t\t");
+// 	else if (msg[10] == 's')
+// 		printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+// }
+
+static void	print_tab(t_philo *philo)
 {
-	if (msg[10] == 'e')
-		printf("\t\t\t\t");
-	else if (msg[10] == ';')
-		printf("\t\t\t\t\t\t\t");
-	else if (msg[10] == 't')
-		printf("\t\t\t\t\t\t\t\t\t\t\t");
-	else if (msg[10] == 's')
-		printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+	int	i;
+
+	if (philo->table->num_philos <= 10)
+	{
+		i = 1;
+		while (i < philo->id)
+		{
+			printf("\t\t");
+			i++;
+		}
+	}
 }
 
 /**
@@ -50,11 +65,13 @@ void	put_msg_fork(t_philo *philo, char *msg, t_table *table, int fork)
 		{
 			pthread_mutex_lock(&philo->table->m_print);
 			if (PUT_MORE_INFOS)
-				print_tab(msg);
+				print_tab(philo);
 			printf("%ld %d %s", get_time_diff(&philo->table->t_start, NULL),
-				philo->id, msg);
-			if (PUT_MORE_INFOS && msg[10] == ' ')
-				printf(" %d", fork);
+					philo->id, msg);
+			if (PUT_MORE_INFOS && msg[10] == ' ' && msg[11] == 't')
+				printf("%s\t%d%s", CLR_GREEN, fork, CLR_RESET);
+			if (PUT_MORE_INFOS && msg[10] == ' ' && msg[11] == 'd')
+				printf("%s\t%d%s", CLR_RED, fork, CLR_RESET);
 			printf("\n");
 			pthread_mutex_unlock(&philo->table->m_print);
 		}

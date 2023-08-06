@@ -78,11 +78,7 @@ void	set_dinner_end(t_table *table, t_bool has_ended)
 		cur_philo = table->philos;
 		while (i <= table->num_philos)
 		{
-			if(cur_philo->fork_locked == TRUE
-			{
-
 			pthread_mutex_unlock(&cur_philo->m_fork);
-			}
 			cur_philo = cur_philo->right_philo;
 			i++;
 		}

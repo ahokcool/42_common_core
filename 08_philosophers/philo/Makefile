@@ -3,13 +3,13 @@
 
 # Variables
 NAME = philo
-TEST_ARGS=1 800 200 200	# args for testing
+TEST_ARGS=10 2800 200 200	# args for testing
 PUT_MORE_INFOS=0			# if 1, print more infos about the program during execution
 
 # Compiler options
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
 RM = rm -f
 
 # Color codes
@@ -60,7 +60,7 @@ run: PUT_MORE_INFOS=1
 run: re
 	./$(NAME) $(TEST_ARGS)
 
-run_count: PUT_MORE_INFOS = 0
+run_count: PUT_MORE_INFOS=0
 run_count: re
 	./$(NAME) $(TEST_ARGS) | ./tests/count_meals.sh  
 norm:

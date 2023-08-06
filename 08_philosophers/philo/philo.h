@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 02:58:27 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 03:37:41 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 # define CLR_CYAN "\033[0;36m"
 # define CLR_RESET "\033[0m"
 
-# define MSG_FORK CLR_GREEN 	"has taken a fork" CLR_RESET
-# define MSG_FORK_DROP CLR_RED 	"has dropped a fork" CLR_RESET
-# define MSG_EAT CLR_ORANGE "is eating" CLR_RESET
-# define MSG_FINISHED_EAT CLR_BLUE "finished eating" CLR_RESET
-# define MSG_SLEEP CLR_CYAN "is sleeping" CLR_RESET
-# define MSG_THINK CLR_MAGENTA "is thinking" CLR_RESET
-# define MSG_DIED CLR_RED "died" CLR_RESET
+# define MSG_FORK CLR_GREEN 		"has taken a fork" CLR_RESET
+# define MSG_FORK_DROP CLR_RED	 	"has dropped fork" CLR_RESET
+# define MSG_EAT CLR_ORANGE 		"is eating" CLR_RESET
+# define MSG_FINISHED_EAT CLR_BLUE 	"finished eating" CLR_RESET
+# define MSG_SLEEP CLR_CYAN 		"is sleeping" CLR_RESET
+# define MSG_THINK CLR_MAGENTA 		"is thinking" CLR_RESET
+# define MSG_DIED CLR_RED 			"died" CLR_RESET
 
 # define EATING 0
 # define FINISHED_EATING 1
