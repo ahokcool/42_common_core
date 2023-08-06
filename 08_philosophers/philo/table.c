@@ -54,7 +54,7 @@ t_bool	has_ended(t_table *table)
 
 void	set_dinner_start(t_table *table, t_bool has_started)
 {
-	put_extra_msg(NULL, "set dinner start: START\n", table, CLR_ORANGE);
+	put_extra_msg(NULL, "set dinner start: ...\n", table, CLR_ORANGE);
 	pthread_mutex_lock(&table->m_started);
 	gettimeofday(&table->t_start, NULL);
 	table->started = has_started;
@@ -67,19 +67,26 @@ void	set_dinner_end(t_table *table, t_bool has_ended)
 	int		i;
 	t_philo	*cur_philo;
 
-	put_extra_msg(NULL, "set dinner end: START\n", table, CLR_ORANGE);
+	put_extra_msg(NULL, "set dinner end: ...\n", table, CLR_ORANGE);
 	pthread_mutex_lock(&table->m_ended);
 	table->ended = has_ended;
 	pthread_mutex_unlock(&table->m_ended);
-	put_extra_msg(NULL, "unlock all forks: START\n", table, CLR_ORANGE);
-	i = 1;
-	cur_philo = table->philos;
-	while (i <= table->num_philos)
+	if (has_ended == TRUE)
 	{
-		pthread_mutex_unlock(&cur_philo->m_fork);
-		cur_philo = cur_philo->right_philo;
-		i++;
+		put_extra_msg(NULL, "unlock all forks: ...\n", table, CLR_ORANGE);
+		i = 1;
+		cur_philo = table->philos;
+		while (i <= table->num_philos)
+		{
+			if(cur_philo->fork_locked == TRUE
+			{
+
+			pthread_mutex_unlock(&cur_philo->m_fork);
+			}
+			cur_philo = cur_philo->right_philo;
+			i++;
+		}
+		put_extra_msg(NULL, "unlock all forks: OK\n", table, CLR_GREEN);
 	}
-	put_extra_msg(NULL, "unlock all forks: OK\n", table, CLR_GREEN);
 	put_extra_msg(NULL, "set dinner end: OK\n", table, CLR_GREEN);
 }

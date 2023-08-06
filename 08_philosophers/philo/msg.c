@@ -5,12 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/06 00:22:34 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 01:32:18 by astein           ###   ########.fr       */
+/*   Created: 2023/09/06 00:22:34 by astein            #+#    #+#             */
+/*   Updated: 2023/08/06 02:59:59 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	print_tab(char *msg)
+{
+	if (msg[10] == 'e')
+		printf("\t\t\t\t");
+	else if (msg[10] == ';')
+		printf("\t\t\t\t\t\t\t");
+	else if (msg[10] == 't')
+		printf("\t\t\t\t\t\t\t\t\t\t\t");
+	else if (msg[10] == 's')
+		printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+}
 
 /**
  * @brief if philo is NULL there has to ba a table
@@ -20,6 +32,11 @@
  * @param table 
  */
 void	put_msg(t_philo *philo, char *msg, t_table *table)
+{
+	put_msg_fork(philo, msg, table, NO_FORK);
+}
+
+void	put_msg_fork(t_philo *philo, char *msg, t_table *table, int fork)
 {
 	if (philo == NULL)
 	{
@@ -32,8 +49,13 @@ void	put_msg(t_philo *philo, char *msg, t_table *table)
 		if (!has_ended(philo->table))
 		{
 			pthread_mutex_lock(&philo->table->m_print);
-			printf("%ld %d %s\n", get_time_diff(&philo->table->t_start, NULL),
+			if (PUT_MORE_INFOS)
+				print_tab(msg);
+			printf("%ld %d %s", get_time_diff(&philo->table->t_start, NULL),
 				philo->id, msg);
+			if (PUT_MORE_INFOS && msg[10] == ' ')
+				printf(" %d", fork);
+			printf("\n");
 			pthread_mutex_unlock(&philo->table->m_print);
 		}
 	}
@@ -43,7 +65,7 @@ void	put_extra_msg(t_philo *philo, char *msg, t_table *table, char *clr)
 {
 	char	*msg_with_clr;
 
-	if (PRINT_MORE_INFOS)
+	if (PUT_MORE_INFOS)
 	{
 		msg_with_clr = ft_strcat_multi(3, clr, msg, CLR_RESET);
 		put_msg(philo, msg_with_clr, table);

@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 01:27:20 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 03:10:15 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	free_table(t_table *table)
 {
-	put_extra_msg(NULL, "free table: START\n", table, CLR_ORANGE);
+	put_extra_msg(NULL, "free table: ...\n", table, CLR_ORANGE);
 	free_philos(table);
-	free(table->philos);
 	pthread_mutex_destroy(&table->m_started);
 	pthread_mutex_destroy(&table->m_ended);
 	pthread_mutex_destroy(&table->m_print);
@@ -30,7 +29,7 @@ void	free_philos(t_table *table)
 	t_philo	*cur_philo;
 	t_philo	*next_philo;
 
-	put_extra_msg(NULL, "free_philos: START\n", table, CLR_ORANGE);
+	put_extra_msg(NULL, "free_philos: ...\n", table, CLR_ORANGE);
 	i = 1;
 	while (i <= table->num_philos)
 	{

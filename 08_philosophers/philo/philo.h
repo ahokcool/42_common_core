@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 01:31:55 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 02:58:27 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,32 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# ifndef PRINT_MORE_INFOS
-#  define PRINT_MORE_INFOS = 0
+# ifndef PUT_MORE_INFOS
+#  define PUT_MORE_INFOS 0
 # endif
 
-# define MSG_FORK "has taken a fork"
-# define MSG_EAT "is eating"
-# define MSG_SLEEP "is sleeping"
-# define MSG_THINK "is thinking"
-# define MSG_DIED "died"
+# define CLR_RED "\033[0;31m"
+# define CLR_GREEN "\033[0;32m"
+# define CLR_ORANGE "\033[0;33m"
+# define CLR_BLUE "\033[0;34m"
+# define CLR_MAGENTA "\033[0;35m"
+# define CLR_CYAN "\033[0;36m"
+# define CLR_RESET "\033[0m"
+
+# define MSG_FORK CLR_GREEN 	"has taken a fork" CLR_RESET
+# define MSG_FORK_DROP CLR_RED 	"has dropped a fork" CLR_RESET
+# define MSG_EAT CLR_ORANGE "is eating" CLR_RESET
+# define MSG_FINISHED_EAT CLR_BLUE "finished eating" CLR_RESET
+# define MSG_SLEEP CLR_CYAN "is sleeping" CLR_RESET
+# define MSG_THINK CLR_MAGENTA "is thinking" CLR_RESET
+# define MSG_DIED CLR_RED "died" CLR_RESET
 
 # define EATING 0
 # define FINISHED_EATING 1
 # define SLEEPING 2
 # define THINKING 3
 # define DIED -1
-
-# define CLR_RED "\033[0;31m"
-# define CLR_GREEN "\033[0;32m"
-# define CLR_YELLOW "\033[0;33m"
-# define CLR_BLUE "\033[0;34m"
-# define CLR_MAGENTA "\033[0;35m"
-# define CLR_CYAN "\033[0;36m"
-# define CLR_ORANGE "\033[0;33m"
-# define CLR_RESET "\033[0m"
+# define NO_FORK -1
 
 typedef enum e_bool
 {
@@ -127,6 +129,8 @@ void				start_sleeping(t_philo *philo);
 
 // MSG
 void				put_msg(t_philo *philo, char *msg, t_table *table);
+void				put_msg_fork(t_philo *philo, char *msg, t_table *table,
+						int fork);
 void				put_extra_msg(t_philo *philo, char *msg, t_table *table,
 						char *clr);
 void				put_exit_msg(t_philo *philo, char *msg, t_table *table,
