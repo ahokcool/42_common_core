@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:22:34 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 07:00:34 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 19:06:18 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,25 @@ static void	print_tab(t_philo *philo)
 
 static void	put_msg(pthread_mutex_t *m_print, char *msg, char *clr)
 {
-	pthread_mutex_lock(m_print);
+	if (m_print)
+		pthread_mutex_lock(m_print);
 	printf("%s%s%s", clr, msg, CLR_RESET);
-	pthread_mutex_unlock(m_print);
+	if (m_print)
+		pthread_mutex_unlock(m_print);
 }
 
 void	put_msg_id(t_philo *philo, int msg_id, int fork)
 {
+	if ((msg_id == MSG_ID_FINISHED_EAT || msg_id == MSG_ID_FORK_DROP)
+		&& !PUT_MORE_INFOS)
+		return ;
 	if (!has_ended(philo->table))
 	{
 		pthread_mutex_lock(&philo->table->m_print);
 		if (PUT_MORE_INFOS)
 			print_tab(philo);
-		printf("%ld %d %s", get_time_diff(&philo->table->t_start),
-				philo->id, get_msg(msg_id));
+		printf("%ld %d %s", get_time_diff(&philo->table->t_start), philo->id,
+				get_msg(msg_id));
 		if (PUT_MORE_INFOS && msg_id == MSG_ID_FORK)
 			printf("%s: %d%s", CLR_RED, fork, CLR_RESET);
 		if (PUT_MORE_INFOS && msg_id == MSG_ID_FORK_DROP)
@@ -60,9 +65,16 @@ void	put_extra_msg(pthread_mutex_t *m_print, char *msg, char *clr)
 
 void	put_exit_msg(t_table *table, char *msg, t_bool success)
 {
-	if (success)
-		put_msg(&table->m_print, msg, CLR_GREEN);
+	pthread_mutex_t *m_print;
+
+	if(table)
+		m_print = &table->m_print;
 	else
-		put_msg(&table->m_print, msg, CLR_RED);
+		m_print = NULL;
+	
+	if (success)
+		put_msg(m_print, msg, CLR_GREEN);
+	else
+		put_msg(m_print, msg, CLR_RED);
 	exit_dining(table, success);
 }

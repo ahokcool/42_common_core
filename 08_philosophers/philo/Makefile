@@ -10,7 +10,7 @@ TEST_ARGS_2=5 800 200 200
 TEST_ARGS_3=5 800 200 200 7 | ./tests/count_meals.sh
 TEST_ARGS_4=4 410 200 200
 TEST_ARGS_5=4 310 200 100
-TEST_ARGS_6=2 300 200 100 42
+TEST_ARGS_6=2 300 200 100 42	
 
 PUT_MORE_INFOS=0			# if 1, print more infos about the program during execution
 
@@ -47,7 +47,7 @@ SRCS = \
 OBJS = $(SRCS:.c=.o)
 
 # TARGETS
-.PHONY: all clean fclean re norm bonus run run_count
+.PHONY: all clean fclean re norm bonus
 
 all: $(NAME)
 
@@ -65,13 +65,15 @@ fclean: clean
 
 re: fclean all
 
+pretty: enable_pretty re
+
 enable_pretty:
 	$(eval PUT_MORE_INFOS = 1)
 
 disable_pretty:
 	$(eval PUT_MORE_INFOS = 0)
 
-run_1: enable_pretty re
+run_1: pretty
 	@echo "------------------------------------------------------------"
 	@echo -n "ARGUMENTS:\t$(TEST_ARGS_1)" | tr ' ' ' '
 	@echo  ""
@@ -79,7 +81,7 @@ run_1: enable_pretty re
 	@echo "------------------------------------------------------------"
 	./$(NAME) $(TEST_ARGS_1)
 
-run_2: enable_pretty re
+run_2: pretty
 	@echo "------------------------------------------------------------"
 	@echo -n "ARGUMENTS:\t$(TEST_ARGS_2)" | tr ' ' ' '
 	@echo  ""
@@ -96,7 +98,7 @@ run_3: disable_pretty re
 	@echo "------------------------------------------------------------"
 	./$(NAME) $(TEST_ARGS_3)
 
-run_4: enable_pretty re
+run_4: pretty
 	@echo "------------------------------------------------------------"
 	@echo -n "ARGUMENTS:\t$(TEST_ARGS_4)" | tr ' ' ' '
 	@echo  ""
@@ -105,7 +107,7 @@ run_4: enable_pretty re
 	sleep 5
 	./$(NAME) $(TEST_ARGS_4)
 
-run_5: enable_pretty re
+run_5: pretty
 	@echo "------------------------------------------------------------"
 	@echo -n "ARGUMENTS:\t$(TEST_ARGS_5)" | tr ' ' ' '
 	@echo  ""
@@ -114,7 +116,7 @@ run_5: enable_pretty re
 	sleep 5
 	./$(NAME) $(TEST_ARGS_5)
 
-run_6: enable_pretty re
+run_6: pretty
 	@echo "------------------------------------------------------------"
 	@echo -n "ARGUMENTS:\t$(TEST_ARGS_6)" | tr ' ' ' '
 	@echo  ""

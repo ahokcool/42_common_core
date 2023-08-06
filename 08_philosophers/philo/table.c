@@ -76,7 +76,7 @@ void	set_dinner_end(t_table *table, t_bool has_ended)
 		put_extra_msg(&table->m_print, "unlock all forks: ...\n",  CLR_ORANGE);
 		i = 1;
 		cur_philo = table->philos;
-		while (i <= table->num_philos)
+		while (cur_philo && i <= table->num_philos)
 		{
 			pthread_mutex_unlock(&cur_philo->m_fork);
 			cur_philo = cur_philo->right_philo;

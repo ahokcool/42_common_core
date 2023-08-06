@@ -6,11 +6,27 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:20:27 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:25:12 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 19:07:05 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void put_params(t_table *table)
+{
+	if(PUT_MORE_INFOS)
+	{
+		pthread_mutex_lock(&table->m_print);
+		printf("===========================================\n");
+		printf("\tnum_philos:\t\t%d\n", table->num_philos);
+		printf("\tdur_die:\t\t%ld\n", table->dur_die);
+		printf("\tdur_eat:\t\t%ld\n", table->dur_eat);
+		printf("\tdur_sleep:\t\t%ld\n", table->dur_sleep);
+		printf("\ttimes_philo_must_eat:\t%d\n", table->times_philo_must_eat);
+		printf("===========================================\n");
+		pthread_mutex_unlock(&table->m_print);
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -22,6 +38,7 @@ int	main(int argc, char **argv)
 	if (!table)
 		put_exit_msg(NULL, "malloc for table failed\n", FALSE);
 	ini_table(table, argc, argv);
+	put_params(table);
 	ini_philos(table);
 	set_dinner_start(table, TRUE);
 	while (1)
@@ -36,14 +53,12 @@ int	main(int argc, char **argv)
 
 void	exit_dining(t_table *table, t_bool success)
 {
-	put_extra_msg(&table->m_print, "exit dinner: ...\n", CLR_ORANGE);
 	if (!table)
 		exit(EXIT_FAILURE);
 	set_dinner_end(table, TRUE);
 	join_philos(table);
 	if (table)
 		free_table(table);
-	put_extra_msg(&table->m_print, "exit dinner: OK\n", CLR_GREEN);
 	if (success)
 		exit(EXIT_SUCCESS);
 	else

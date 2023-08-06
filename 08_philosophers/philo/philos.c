@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 23:53:01 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 05:37:38 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 19:09:21 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	join_philos(t_table *table)
 	i = 1;
 	put_extra_msg(&table->m_print, "joining threads: ...\n", CLR_ORANGE);
 	cur_philo = table->philos;
-	while (i <= table->num_philos)
+	while (cur_philo && i <= table->num_philos)
 	{
 		if (pthread_join(cur_philo->tid, NULL))
 			put_exit_msg(table, "joining thread", FALSE);

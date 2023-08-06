@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:35:53 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:23:22 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 18:35:22 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_bool	set_state(t_philo *philo, int state)
 	}
 	else if (state == FINISHED_EATING)
 	{
-		gettimeofday(&philo->t_last_meal, NULL);
 		philo->count_meals++;
 		put_msg_id(philo, MSG_ID_FINISHED_EAT, NO_FORK);
 	}
@@ -66,7 +65,7 @@ void	*life_of_philo(void *arg)
 	gettimeofday(&philo->t_last_meal, NULL);
 	pthread_mutex_unlock(&philo->m_philo);
 	if (philo->id % 2 != 0)
-		usleep(50);
+		usleep((philo->table->dur_eat * 1000) / 27);
 	while (get_state(philo) != DIED && !has_ended(philo->table))
 	{
 		if (philo->state == SLEEPING)

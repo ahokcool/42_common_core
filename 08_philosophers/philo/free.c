@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 05:46:30 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 19:09:47 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_philos(t_table *table)
 
 	put_extra_msg(&table->m_print, "free_philos: ...\n", CLR_ORANGE);
 	i = 1;
-	while (i <= table->num_philos)
+	while (table->philos && i <= table->num_philos)
 	{
 		cur_philo = table->philos;
 		next_philo = cur_philo->right_philo;
