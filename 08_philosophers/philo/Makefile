@@ -3,8 +3,8 @@
 
 # Variables
 NAME = philo
-TEST_ARGS=20 1000 20 30 21
-PRINT_MORE_INFOS=1	# if 1, print more infos about the program during execution
+TEST_ARGS=5 800 200 200 7	# args for testing
+PRINT_MORE_INFOS=1			# if 1, print more infos about the program during execution
 
 # Compiler options
 CC = cc
@@ -25,12 +25,14 @@ SRCS = \
 	philos.c \
 	utils.c \
 	check.c \
-	dining_table.c \
+	table.c \
 	lib_utils_1.c \
-	lib_utils_2.c \
-	lib_utils_3.c \
-	ft_lstclear.c \
-	ft_free.c 
+	ft_strcat_multi.c \
+	lst.c\
+	lst_clear.c \
+	free.c \
+	msg.c \
+	philo_actions.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)

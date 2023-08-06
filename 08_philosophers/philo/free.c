@@ -1,16 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 19:34:44 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 01:27:20 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_table(t_table *table)
+{
+	put_extra_msg(NULL, "free table: START\n", table, CLR_ORANGE);
+	free_philos(table);
+	free(table->philos);
+	pthread_mutex_destroy(&table->m_started);
+	pthread_mutex_destroy(&table->m_ended);
+	pthread_mutex_destroy(&table->m_print);
+	free(table);
+	put_extra_msg(NULL, "free table: OK\n", table, CLR_GREEN);
+}
+
+void	free_philos(t_table *table)
+{
+	int		i;
+	t_philo	*cur_philo;
+	t_philo	*next_philo;
+
+	put_extra_msg(NULL, "free_philos: START\n", table, CLR_ORANGE);
+	i = 1;
+	while (i <= table->num_philos)
+	{
+		cur_philo = table->philos;
+		next_philo = cur_philo->right_philo;
+		free_philo(cur_philo);
+		free(cur_philo);
+		cur_philo = NULL;
+		table->philos = next_philo;
+		i++;
+	}
+	put_extra_msg(NULL, "free_philos: OK\n", table, CLR_GREEN);
+}
+
+void	free_philo(t_philo *philo)
+{
+	pthread_mutex_destroy(&philo->m_philo);
+	pthread_mutex_destroy(&philo->m_fork);
+}
 
 /**
  * @brief	free the pointer 'ptr'
@@ -25,34 +64,14 @@ static void	free_ptr(void *ptr)
 }
 
 /**
- * @brief	frees each entry of the array and the pointer to the array itself
- * 
- * @param	arr	array to be freed
- */
-static void	free_arr(void **arr)
-{
-	int	arr_i;
-
-	arr_i = 0;
-	while (arr[arr_i])
-	{
-		free(arr[arr_i]);
-		arr_i++;
-	}
-	free(arr);
-}
-
-/**
  * @brief	to simplify the freeing process this function can free
  * 				(symbol 'p')	pointers
- * 				(symbol 'a')	arrays
  * 				(symbol 'l')	linked lists of the struct type 't_list'
  * 
  * 			EXAMPLE:
  * 				char	*ptr;
- * 				char	**arr;
  * 				t_list	**lst;
- * 				free_whatever ("pal", ptr, arr, lst);
+ * 				free_whatever ("pl", ptr, lst);
  * 
  * 			NOTE:	the content of nodes int the list are NOT freed!
  * 
@@ -69,12 +88,8 @@ void	*free_whatever(char *str, ...)
 	{
 		if (*str == 'p')
 			free_ptr(va_arg(args, void *));
-		else if (*str == 'a')
-			free_arr(va_arg(args, void **));
 		else if (*str == 'l')
 			ft_lstclear(va_arg(args, t_list **), null_ptr);
-		else if (*str == 'c')
-			ft_lstclear(va_arg(args, t_list **), free_content);
 		else
 			printf("bad param free_whatever: %c\n", str[0]);
 		str++;

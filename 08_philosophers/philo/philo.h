@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 20:22:37 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 01:31:55 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 # define MSG_DIED "died"
 
 # define EATING 0
-# define SLEEPING 1
-# define THINKING 2
+# define FINISHED_EATING 1
+# define SLEEPING 2
+# define THINKING 3
 # define DIED -1
 
 # define CLR_RED "\033[0;31m"
@@ -48,114 +49,117 @@ typedef enum e_bool
 {
 	FALSE,
 	TRUE
-}							t_bool;
+}					t_bool;
 
 typedef struct s_philo
 {
-	int						number;
-	//Each philosopher has a number ranging from 1 to number_of_philosophers.
-	pthread_t				tid;
-	pthread_mutex_t			m_philo;
-	pthread_mutex_t			m_fork;
-	int						state;
-	long					duration_die;
-	long					duration_eat;
-	long					duration_sleep;
-	struct timeval			t_last_meal;
-	// t_bool					has_left_fork;
-	// t_bool					has_right_fork;
-	struct s_philo			*left_philo;
-	struct s_philo			*right_philo;
-	int						count_meals;
-	// from dining table
-	// t_bool			*dinner_started;
-	// struct timeval	*t_start;
-	// pthread_mutex_t	*m_print;
-	struct s_dining_table	*dining_table;
+	int				id;
+	pthread_t		tid;
+	pthread_mutex_t	m_philo;
+	pthread_mutex_t	m_fork;
+	int				state;
+	struct timeval	t_last_meal;
+	struct s_philo	*left_philo;
+	struct s_philo	*right_philo;
+	int				count_meals;
+	struct s_table	*table;
 
-}							t_philo;
+}					t_philo;
 
-typedef struct s_dining_table
+typedef struct s_table
 {
-	pthread_mutex_t			m_dinner_started;
-	pthread_mutex_t			m_dinner_over;
-	pthread_mutex_t			m_print;
-	t_philo					*philos;
-	t_bool					dinner_started;
-	t_bool					dinner_over;
-	struct timeval			t_start;
-	struct timeval			t_curr;
-	int						num_philos;
-	long					duration_die;
-	long					duration_eat;
-	long					duration_sleep;
-	int						times_each_philo_must_eat;
-	int						amount_of_phillos_done_eating;
-}							t_dining_table;
+	pthread_mutex_t	m_started;
+	pthread_mutex_t	m_ended;
+	pthread_mutex_t	m_print;
+	t_philo			*philos;
+	t_bool			started;
+	t_bool			ended;
+	struct timeval	t_start;
+	struct timeval	t_curr;
+	int				num_philos;
+	long			dur_die;
+	long			dur_eat;
+	long			dur_sleep;
+	int				times_philo_must_eat;
+	int				philos_done_eating;
+}					t_table;
 
 typedef struct s_list
 {
-	void					*content;
-	struct s_list			*next;
-}							t_list;
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
-// LIB UTILS 1
-long						ft_atol(char *a);
-void						ft_bzero(void *s, size_t n);
-void						*ft_calloc(size_t nmemb, size_t size);
-size_t						ft_strlen(const char *s);
-void						*ft_memcpy(void *dest, const void *src, size_t n);
+// main
+int					main(int argc, char **argv);
+void				exit_dining(t_table *table, t_bool success);
 
-// LIB UTILS 2
-char						*ft_strcat_multi(int amount_of_strs, ...);
+//TABLE
+void				ini_table(t_table *table, int argc, char **argv);
+t_bool				has_started(t_table *table);
+t_bool				has_ended(t_table *table);
+void				set_dinner_start(t_table *table, t_bool has_started);
+void				set_dinner_end(t_table *table, t_bool has_ended);
 
-// LIB UTILS 3 - LST
-t_list						*ft_lstnew(void *content);
-void						ft_lstadd_front(t_list **lst, t_list *new);
-void						ft_lstadd_back(t_list **lst, t_list *new);
-t_list						*ft_lstlast(t_list *lst);
-void						ft_lstdelone(t_list *lst, void (*del)(void *));
+// CHECK
+void				check_philos_gt_zero(t_table *table);
+void				check_times_gt_zero(t_table *table);
+void				check_each_philo_must_eat(t_table *table);
+t_bool				check_if_alive(t_philo *philo);
+t_bool				check_if_eaten_enough(t_philo *philo);
 
-// free lst clear
-void						null_ptr(void *nothing);
-void						free_content(void *node);
-void						ft_lstclear(t_list **lst, void (*del)(void *));
+// PHILOS
+void				ini_philos(t_table *table);
+void				join_philos(t_table *table);
+t_bool				check_if_any_philo_died(t_table *table);
+t_bool				check_if_all_philo_have_eaten_enough(t_table *table);
+
+// PHILO
+int					get_state(t_philo *philo);
+t_bool				set_state(t_philo *philo, int state);
+void				*life_of_philo(void *arg);
+
+// PHILO ACTIONS
+t_bool				request_for_forks(t_philo *philo);
+void				start_eating(t_philo *philo);
+void				start_thinking(t_philo *philo);
+void				start_sleeping(t_philo *philo);
+
+// MSG
+void				put_msg(t_philo *philo, char *msg, t_table *table);
+void				put_extra_msg(t_philo *philo, char *msg, t_table *table,
+						char *clr);
+void				put_exit_msg(t_philo *philo, char *msg, t_table *table,
+						t_bool success);
+
+// FREE
+void				free_table(t_table *table);
+void				free_philos(t_table *table);
+void				free_philo(t_philo *philo);
+void				*free_whatever(char *str, ...);
 
 //UTILS
-long int	get_time_diff(struct timeval *t_start,
-						struct timeval *t_end);
-void						print_msg(t_philo *philo, char *msg,
-								t_dining_table *dining_table);
-void						print_additional_msg(t_philo *philo, char *msg,
-								t_dining_table *dining_table, char *clr);
-// char						*ft_strjoin(char const *s1, char const *s2);
+long int			get_time_diff(struct timeval *t1, struct timeval *t2);
 
-//PHILOS
-void						ini_philos(t_dining_table *dining_table);
-void						join_philos(t_dining_table *dining_table);
-t_bool						check_if_any_philo_died(t_dining_table *dining_table);
-t_bool						check_if_all_philo_have_eaten_enough(t_dining_table *dining_table);
-void						free_philos(t_dining_table *dining_table);
+// LIB UTILS 1
+long				ft_atol(char *a);
+void				ft_bzero(void *s, size_t n);
+void				*ft_calloc(size_t nmemb, size_t size);
+size_t				ft_strlen(const char *s);
+void				*ft_memcpy(void *dest, const void *src, size_t n);
 
-//PHILO
-void						*life_of_philo(void *arg);
-void						free_philo(t_philo *philo);
+// ft_strcat_multi.c
+char				*ft_strcat_multi(int amount_of_strs, ...);
 
-//DINNING TABLE
-void						set_dinner_start(t_dining_table *dining_table);
-t_bool						dinning_started(t_dining_table *dining_table);
-t_bool						is_dinner_over(t_dining_table *dining_table);
-void						set_dinner_over(t_dining_table *dining_table);
-void						free_dining_table(t_dining_table *dining_table);
+// lst clear
+void				null_ptr(void *nothing);
+void				ft_lstclear(t_list **lst, void (*del)(void *));
 
-// ft_free
-void						*free_whatever(char *str, ...);
-
-void	ini_dining_table(t_dining_table *dining_table,
-						int argc,
-						char **argv);
-void						check_times_gt_zero(t_dining_table *dining_table);
-void						check_philos_gt_zero(t_dining_table *dining_table);
-void						check_each_philo_must_eat(t_dining_table *dining_table);
+// lst.c
+t_list				*ft_lstnew(void *content);
+void				ft_lstadd_front(t_list **lst, t_list *new);
+void				ft_lstadd_back(t_list **lst, t_list *new);
+t_list				*ft_lstlast(t_list *lst);
+void				ft_lstdelone(t_list *lst, void (*del)(void *));
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 19:19:54 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 19:28:05 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 01:34:26 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ size_t	ft_strlen(const char *s)
  */
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t i;
-	unsigned char *d;
-	unsigned const char *s;
+	size_t				i;
+	unsigned char		*d;
+	unsigned const char	*s;
 
 	d = dest;
 	s = src;

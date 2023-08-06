@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:11:23 by astein            #+#    #+#             */
-/*   Updated: 2023/08/05 19:33:28 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 01:26:14 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 void	null_ptr(void *nothing)
 {
 	(void)nothing;
-}
-
-/**
- * @brief	I use this function as a function pointer parameter for ft_lstclear
- * 			to free each nodes content
- * 
- * @param node	will be the pointer to content of a linked list.
- */
-void	free_content(void *node)
-{
-	free(node);
 }
 
 /**
