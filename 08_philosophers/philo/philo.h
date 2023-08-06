@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 03:37:41 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 06:24:33 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,26 @@
 # define CLR_MAGENTA "\033[0;35m"
 # define CLR_CYAN "\033[0;36m"
 # define CLR_RESET "\033[0m"
+# define CLR_NONE ""
 
-# define MSG_FORK CLR_GREEN 		"has taken a fork" CLR_RESET
-# define MSG_FORK_DROP CLR_RED	 	"has dropped fork" CLR_RESET
-# define MSG_EAT CLR_ORANGE 		"is eating" CLR_RESET
-# define MSG_FINISHED_EAT CLR_BLUE 	"finished eating" CLR_RESET
-# define MSG_SLEEP CLR_CYAN 		"is sleeping" CLR_RESET
-# define MSG_THINK CLR_MAGENTA 		"is thinking" CLR_RESET
-# define MSG_DIED CLR_RED 			"died" CLR_RESET
-
-# define EATING 0
-# define FINISHED_EATING 1
-# define SLEEPING 2
-# define THINKING 3
 # define DIED -1
+# define MSG_ID_DIED -1
+
+# define MSG_ID_FORK 0
+# define MSG_ID_FORK_DROP 1
+
+# define EATING 2
+# define MSG_ID_EAT 2
+
+# define FINISHED_EATING 3
+# define MSG_ID_FINISHED_EAT 3
+
+# define SLEEPING 4
+# define MSG_ID_SLEEP 4
+
+# define THINKING 5
+# define MSG_ID_THINK 5
+
 # define NO_FORK -1
 
 typedef enum e_bool
@@ -128,13 +134,13 @@ void				start_thinking(t_philo *philo);
 void				start_sleeping(t_philo *philo);
 
 // MSG
-void				put_msg(t_philo *philo, char *msg, t_table *table);
-void				put_msg_fork(t_philo *philo, char *msg, t_table *table,
-						int fork);
-void				put_extra_msg(t_philo *philo, char *msg, t_table *table,
+void				put_msg_id(t_philo *philo, int msg_id, int fork);
+void				put_extra_msg(pthread_mutex_t *m_print, char *msg,
 						char *clr);
-void				put_exit_msg(t_philo *philo, char *msg, t_table *table,
-						t_bool success);
+void				put_exit_msg(t_table *table, char *msg, t_bool success);
+
+// MSG VALUES
+const char			*get_msg(int msg_id);
 
 // FREE
 void				free_table(t_table *table);
@@ -142,8 +148,9 @@ void				free_philos(t_table *table);
 void				free_philo(t_philo *philo);
 void				*free_whatever(char *str, ...);
 
-//UTILS
-long int			get_time_diff(struct timeval *t1, struct timeval *t2);
+//Time	
+long int			get_time_diff_last_meal(t_philo *philo);
+long int			get_time_diff(struct timeval *t1);
 
 // LIB UTILS 1
 long				ft_atol(char *a);

@@ -23,12 +23,13 @@ SRCS = \
 	main.c \
 	philo.c \
 	philos.c \
-	utils.c \
+	time.c \
 	check.c \
 	table.c \
 	lib_utils_1.c \
 	ft_strcat_multi.c \
 	lst.c\
+	msg_values.c \
 	lst_clear.c \
 	free.c \
 	msg.c \

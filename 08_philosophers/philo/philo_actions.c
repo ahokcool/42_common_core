@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 01:01:28 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 03:26:33 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 05:32:24 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ t_bool	request_for_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->m_fork);
 		if (has_ended(philo->table))
 			return (FALSE);
-		put_msg_fork(philo, MSG_FORK, NULL, philo->id);
+		put_msg_id(philo, MSG_ID_FORK, philo->id);
 		pthread_mutex_lock(&philo->right_philo->m_fork);
 		if (has_ended(philo->table))
 			return (FALSE);
-		put_msg_fork(philo, MSG_FORK, NULL, philo->right_philo->id);
+		put_msg_id(philo, MSG_ID_FORK, philo->right_philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->right_philo->m_fork);
 		if (has_ended(philo->table))
 			return (FALSE);
-		put_msg_fork(philo, MSG_FORK, NULL, philo->right_philo->id);
+		put_msg_id(philo, MSG_ID_FORK, philo->right_philo->id);
 		pthread_mutex_lock(&philo->m_fork);
 		if (has_ended(philo->table))
 			return (FALSE);
-		put_msg_fork(philo, MSG_FORK, NULL, philo->id);
+		put_msg_id(philo, MSG_ID_FORK, philo->id);
 	}
 	return (TRUE);
 }
@@ -51,10 +51,10 @@ void	start_eating(t_philo *philo)
 	if (set_state(philo, FINISHED_EATING) == FALSE)
 		return ;
 	if (PUT_MORE_INFOS)
-		put_msg_fork(philo, MSG_FORK_DROP, NULL, philo->id);
+		put_msg_id(philo, MSG_ID_FORK_DROP, philo->id);
 	pthread_mutex_unlock(&philo->m_fork);
 	if (PUT_MORE_INFOS)
-		put_msg_fork(philo, MSG_FORK_DROP, NULL, philo->right_philo->id);
+		put_msg_id(philo, MSG_ID_FORK_DROP, philo->right_philo->id);
 	pthread_mutex_unlock(&philo->right_philo->m_fork);
 }
 

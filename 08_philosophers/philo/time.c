@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:17:22 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 01:15:28 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 06:23:20 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long int	get_time_diff(struct timeval *t1, struct timeval *t2)
+long int	get_time_diff_last_meal(t_philo *philo)
+{
+	long int	li;
+
+	pthread_mutex_lock(&philo->m_philo);
+	li = get_time_diff(&philo->t_last_meal);
+	pthread_mutex_unlock(&philo->m_philo);
+	return (li);
+}
+
+long int	get_time_diff(struct timeval *t1)
 {
 	long int		sec;
 	long int		usec;
 	struct timeval	t_curr;
 
-	if (t2 == NULL)
-		gettimeofday(&t_curr, NULL);
-	else
-		t_curr = *t2;
+	gettimeofday(&t_curr, NULL);
 	sec = t_curr.tv_sec - t1->tv_sec;
 	usec = t_curr.tv_usec - t1->tv_usec;
 	return (sec * 1000 + usec / 1000);

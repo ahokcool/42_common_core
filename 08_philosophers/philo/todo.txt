@@ -17,3 +17,5 @@ DONE	find errors
 	something with meals count doesnt work
 		t_philo					*philos; muss kein pointer sein!
 	one phile is not working yet
+
+	vielleicht muss ich die ess zeit akutalisieren mit mutex

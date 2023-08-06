@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 23:53:01 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 01:55:30 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 05:37:38 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ini_philos(t_table *table)
 	{
 		cur_philo = malloc(sizeof(t_philo));
 		if (!cur_philo)
-			put_exit_msg(NULL, "mallocing space for philo", table, FALSE);
+			put_exit_msg(table, "mallocing space for philo", FALSE);
 		pthread_mutex_init(&cur_philo->m_philo, NULL);
 		pthread_mutex_init(&cur_philo->m_fork, NULL);
 		cur_philo->state = SLEEPING;
@@ -48,7 +48,7 @@ void	ini_philos(t_table *table)
 		cur_philo->table = table;
 		add_philo(cur_philo, table);
 		if (pthread_create(&cur_philo->tid, NULL, life_of_philo, cur_philo))
-			put_exit_msg(NULL, "creating thread", table, FALSE);
+			put_exit_msg(table, "creating thread", FALSE);
 		cur_philo = NULL;
 		i++;
 	}
@@ -60,16 +60,16 @@ void	join_philos(t_table *table)
 	t_philo	*cur_philo;
 
 	i = 1;
-	put_extra_msg(NULL, "joining threads: ...\n", table, CLR_ORANGE);
+	put_extra_msg(&table->m_print, "joining threads: ...\n", CLR_ORANGE);
 	cur_philo = table->philos;
 	while (i <= table->num_philos)
 	{
 		if (pthread_join(cur_philo->tid, NULL))
-			put_exit_msg(NULL, "joining thread", table, FALSE);
+			put_exit_msg(table, "joining thread", FALSE);
 		cur_philo = cur_philo->right_philo;
 		i++;
 	}
-	put_extra_msg(NULL, "joining threads: OK\n", table, CLR_GREEN);
+	put_extra_msg(&table->m_print, "joining threads: OK\n", CLR_GREEN);
 }
 
 t_bool	check_if_any_philo_died(t_table *table)

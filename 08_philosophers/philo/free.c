@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 03:10:15 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/06 05:46:30 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	free_table(t_table *table)
 {
-	put_extra_msg(NULL, "free table: ...\n", table, CLR_ORANGE);
+	put_extra_msg(&table->m_print, "free table: ...\n", CLR_ORANGE);
 	free_philos(table);
 	pthread_mutex_destroy(&table->m_started);
 	pthread_mutex_destroy(&table->m_ended);
 	pthread_mutex_destroy(&table->m_print);
 	free(table);
-	put_extra_msg(NULL, "free table: OK\n", table, CLR_GREEN);
+	put_extra_msg(&table->m_print, "free table: OK\n", CLR_GREEN);
 }
 
 void	free_philos(t_table *table)
@@ -29,7 +29,7 @@ void	free_philos(t_table *table)
 	t_philo	*cur_philo;
 	t_philo	*next_philo;
 
-	put_extra_msg(NULL, "free_philos: ...\n", table, CLR_ORANGE);
+	put_extra_msg(&table->m_print, "free_philos: ...\n", CLR_ORANGE);
 	i = 1;
 	while (i <= table->num_philos)
 	{
@@ -41,7 +41,7 @@ void	free_philos(t_table *table)
 		table->philos = next_philo;
 		i++;
 	}
-	put_extra_msg(NULL, "free_philos: OK\n", table, CLR_GREEN);
+	put_extra_msg(&table->m_print, "free_philos: OK\n", CLR_GREEN);
 }
 
 void	free_philo(t_philo *philo)
