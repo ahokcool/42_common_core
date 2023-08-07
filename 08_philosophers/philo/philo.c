@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:35:53 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 18:35:22 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:56:25 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	*life_of_philo(void *arg)
 		usleep((philo->table->dur_eat * 1000) / 27);
 	while (get_state(philo) != DIED && !has_ended(philo->table))
 	{
-		if (philo->state == SLEEPING)
+		if (get_state(philo) == SLEEPING)
 			start_eating(philo);
-		else if (philo->state == FINISHED_EATING)
+		else if (get_state(philo) == FINISHED_EATING)
 			start_thinking(philo);
-		else if (philo->state == THINKING)
+		else if (get_state(philo) == THINKING)
 			start_sleeping(philo);
 	}
 	return (NULL);

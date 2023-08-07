@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 19:09:47 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:45:03 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_table(t_table *table)
 	pthread_mutex_destroy(&table->m_ended);
 	pthread_mutex_destroy(&table->m_print);
 	free(table);
-	put_extra_msg(&table->m_print, "free table: OK\n", CLR_GREEN);
+	put_extra_msg(NULL, "free table: OK\n", CLR_GREEN);
 }
 
 void	free_philos(t_table *table)

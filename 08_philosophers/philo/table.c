@@ -64,8 +64,8 @@ void	set_dinner_start(t_table *table, t_bool has_started)
 
 void	set_dinner_end(t_table *table, t_bool has_ended)
 {
-	int		i;
-	t_philo	*cur_philo;
+	// int		i;
+	// t_philo	*cur_philo;
 
 	put_extra_msg(&table->m_print, "set dinner end: ...\n", CLR_ORANGE);
 	pthread_mutex_lock(&table->m_ended);
@@ -73,16 +73,16 @@ void	set_dinner_end(t_table *table, t_bool has_ended)
 	pthread_mutex_unlock(&table->m_ended);
 	if (has_ended == TRUE)
 	{
-		put_extra_msg(&table->m_print, "unlock all forks: ...\n",  CLR_ORANGE);
-		i = 1;
-		cur_philo = table->philos;
-		while (cur_philo && i <= table->num_philos)
-		{
-			pthread_mutex_unlock(&cur_philo->m_fork);
-			cur_philo = cur_philo->right_philo;
-			i++;
-		}
-		put_extra_msg(&table->m_print, "unlock all forks: OK\n", CLR_GREEN);
+		// put_extra_msg(&table->m_print, "unlock all forks: ...\n",  CLR_ORANGE);
+		// i = 1;
+		// cur_philo = table->philos;
+		// while (cur_philo && i <= table->num_philos)
+		// {
+		// 	pthread_mutex_unlock(&cur_philo->m_fork);
+		// 	cur_philo = cur_philo->right_philo;
+		// 	i++;
+		// }
+		// put_extra_msg(&table->m_print, "unlock all forks: OK\n", CLR_GREEN);
 	}
 	put_extra_msg(&table->m_print, "set dinner end: OK\n", CLR_GREEN);
 }
