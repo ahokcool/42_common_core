@@ -17,7 +17,7 @@ PUT_MORE_INFOS=0			# if 1, print more infos about the program during execution
 # Compiler options
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
-# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
+#CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
 RM = rm -f
 
 # Color codes
