@@ -27,7 +27,6 @@ void	ini_table(t_table *table, int argc, char **argv)
 	table->philos = NULL;
 	table->min_wait_time = ((table->num_philos - (int)(table->num_philos / 2)
 				- 1) * table->dur_eat) + (table->dur_eat * 0.5);
-	printf("min_wait_time: %ld\n", table->min_wait_time);
 	if (argc == 6)
 		table->times_philo_must_eat = ft_atol(argv[5]);
 	check_times_gt_zero(table);

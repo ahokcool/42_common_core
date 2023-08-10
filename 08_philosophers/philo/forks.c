@@ -6,14 +6,11 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 19:53:43 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 15:57:05 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:47:49 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// Resource hierarchy solution
-// https://en.wikipedia.org/wiki/Dining_philosophers_problem
 
 static t_bool	grab_left_right(t_philo *philo)
 {
@@ -58,6 +55,8 @@ static t_bool	grab_right_left(t_philo *philo)
 	return (TRUE);
 }
 
+// Resource hierarchy solution
+// https://en.wikipedia.org/wiki/Dining_philosophers_problem
 t_bool	grab_forks(t_philo *philo)
 {
 	if (philo->table->num_philos == 1)
