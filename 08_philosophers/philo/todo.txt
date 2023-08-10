@@ -1,21 +1,10 @@
-DONE	start threads
-DONE	sznc threads
-DONE	global variable start dinner
-DONE		.h
-DONE		life of a philo
-DONE		main
-DONE	set lock for printf
-DONE	thinking
-DONE	sleeping
-DONE	eating > die
-DONE	main checker if dead
-DONE	find errors
+Ablauf
+
+-main erstellt structs
+-started threads
+-gibt startschuss
 
 
 
-	all error msg as define in h
-	something with meals count doesnt work
-		t_philo					*philos; muss kein pointer sein!
-	one phile is not working yet
 
-	vielleicht muss ich die ess zeit akutalisieren mit mutex
+
