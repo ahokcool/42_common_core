@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 01:01:28 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 02:23:55 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:57:05 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_bool	start_eating(t_philo *philo)
 	while (get_time_diff_last_meal(philo) < philo->table->min_wait_time
 		&& get_meal_count(philo) != 0)
 		usleep(10);
-	if (!request_for_forks(philo))
+	if (!grab_forks(philo))
 		return (FALSE);
 	if (set_state(philo, EATING) == FALSE)
 		return (FALSE);

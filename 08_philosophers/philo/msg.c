@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:22:34 by astein            #+#    #+#             */
-/*   Updated: 2023/08/08 19:38:40 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:37:25 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void	put_msg_id(t_philo *philo, int msg_id, int fork)
 	}
 }
 
-void	put_extra_msg(pthread_mutex_t *m_print, char *msg, char *clr)
+void	put_extra_msg(pthread_mutex_t *m_print, char *msg, char *c)
 {
 	if (PUT_MORE_INFOS)
-		put_msg(m_print, msg, clr);
+		put_msg(m_print, msg, c);
 }
 
 void	put_exit_msg(t_table *table, char *msg, t_bool success)

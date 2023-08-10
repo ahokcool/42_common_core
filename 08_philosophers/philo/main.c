@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:20:27 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 02:24:44 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:38:32 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 	put_params(table);
 	ini_philos(table);
 	set_dinner_start(table, TRUE);
+	usleep(1000);
 	while (1)
 	{
 		if (check_if_any_philo_died(table))

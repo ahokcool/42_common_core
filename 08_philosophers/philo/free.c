@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:39:45 by astein            #+#    #+#             */
-/*   Updated: 2023/08/07 17:45:03 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:51:15 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,51 +48,4 @@ void	free_philo(t_philo *philo)
 {
 	pthread_mutex_destroy(&philo->m_philo);
 	pthread_mutex_destroy(&philo->m_fork);
-}
-
-/**
- * @brief	free the pointer 'ptr'
- * 
- * @param	ptr pointer to be freed
- */
-static void	free_ptr(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-	ptr = NULL;
-}
-
-/**
- * @brief	to simplify the freeing process this function can free
- * 				(symbol 'p')	pointers
- * 				(symbol 'l')	linked lists of the struct type 't_list'
- * 
- * 			EXAMPLE:
- * 				char	*ptr;
- * 				t_list	**lst;
- * 				free_whatever ("pl", ptr, lst);
- * 
- * 			NOTE:	the content of nodes int the list are NOT freed!
- * 
- * @param	str		symols representing the argument types
- * @param	...		arguments to be freed
- * @return	void*	always 'NULL'
- */
-void	*free_whatever(char *str, ...)
-{
-	va_list	args;
-
-	va_start(args, str);
-	while (*str)
-	{
-		if (*str == 'p')
-			free_ptr(va_arg(args, void *));
-		else if (*str == 'l')
-			ft_lstclear(va_arg(args, t_list **), null_ptr);
-		else
-			printf("bad param free_whatever: %c\n", str[0]);
-		str++;
-	}
-	va_end(args);
-	return (NULL);
 }

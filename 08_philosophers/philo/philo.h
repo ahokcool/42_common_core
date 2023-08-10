@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 02:16:05 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:30:36 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,87 +95,64 @@ typedef struct s_table
 	long			min_wait_time;
 }					t_table;
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
-// main
-int					main(int argc, char **argv);
-void				exit_dining(t_table *table, t_bool success);
-
-//TABLE
-void				ini_table(t_table *table, int argc, char **argv);
-t_bool				has_started(t_table *table);
-t_bool				has_ended(t_table *table);
-void				set_dinner_start(t_table *table, t_bool has_started);
-void				set_dinner_end(t_table *table, t_bool has_ended);
-
-// CHECK
+// check.c
 void				check_philos_gt_zero(t_table *table);
 void				check_times_gt_zero(t_table *table);
 void				check_each_philo_must_eat(t_table *table);
 t_bool				check_if_alive(t_philo *philo);
 t_bool				check_if_eaten_enough(t_philo *philo);
 
-// PHILOS
-void				ini_philos(t_table *table);
-void				join_philos(t_table *table);
-t_bool				check_if_any_philo_died(t_table *table);
-t_bool				check_if_all_philo_have_eaten_enough(t_table *table);
+// forks.c
+t_bool				grab_forks(t_philo *philo);
+void				drop_forks(t_philo *philo);
 
-// PHILO
+// free.c
+void				free_table(t_table *table);
+void				free_philos(t_table *table);
+void				free_philo(t_philo *philo);
+
+// lib_utils.c
+long				ft_atol(char *a);
+
+// main.c
+int					main(int argc, char **argv);
+void				exit_dining(t_table *table, t_bool success);
+
+// msg.c
+void				put_msg_id(t_philo *philo, int msg_id, int fork);
+void				put_extra_msg(pthread_mutex_t *m_print, char *msg, char *c);
+void				put_exit_msg(t_table *table, char *msg, t_bool success);
+
+// msg_txt.c
+const char			*get_msg(int msg_id);
+
+// philo.c
 int					get_state(t_philo *philo);
 t_bool				set_state(t_philo *philo, int state);
 int					get_meal_count(t_philo *philo);
 int					get_meal_diff(t_philo *philo);
 void				*life_of_philo(void *arg);
 
-// PHILO ACTIONS
+// philo_actions.c
 t_bool				start_eating(t_philo *philo);
 t_bool				start_thinking(t_philo *philo);
 t_bool				start_sleeping(t_philo *philo);
 
-// FORKS.C
-t_bool				request_for_forks(t_philo *philo);
-void				drop_forks(t_philo *philo);
+// philos.c
+void				ini_philos(t_table *table);
+void				join_philos(t_table *table);
+t_bool				check_if_any_philo_died(t_table *table);
+t_bool				check_if_all_philo_have_eaten_enough(t_table *table);
 
-// MSG
-void				put_msg_id(t_philo *philo, int msg_id, int fork);
-void				put_extra_msg(pthread_mutex_t *m_print, char *msg,
-						char *clr);
-void				put_exit_msg(t_table *table, char *msg, t_bool success);
+// table.c
+void				ini_table(t_table *table, int argc, char **argv);
+t_bool				has_started(t_table *table);
+t_bool				has_ended(t_table *table);
+void				set_dinner_start(t_table *table, t_bool has_started);
+void				set_dinner_end(t_table *table, t_bool has_ended);
 
-// MSG VALUES
-const char			*get_msg(int msg_id);
-
-// FREE
-void				free_table(t_table *table);
-void				free_philos(t_table *table);
-void				free_philo(t_philo *philo);
-void				*free_whatever(char *str, ...);
-
-//Time
+// time.c
 long int			get_time_diff_last_meal(t_philo *philo);
 long int			get_time_diff(struct timeval *t1);
-
-// LIB UTILS 1
-long				ft_atol(char *a);
-void				ft_bzero(void *s, size_t n);
-void				*ft_calloc(size_t nmemb, size_t size);
-size_t				ft_strlen(const char *s);
-void				*ft_memcpy(void *dest, const void *src, size_t n);
-
-// lst clear
-void				null_ptr(void *nothing);
-void				ft_lstclear(t_list **lst, void (*del)(void *));
-
-// lst.c
-t_list				*ft_lstnew(void *content);
-void				ft_lstadd_front(t_list **lst, t_list *new);
-void				ft_lstadd_back(t_list **lst, t_list *new);
-t_list				*ft_lstlast(t_list *lst);
-void				ft_lstdelone(t_list *lst, void (*del)(void *));
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 19:53:43 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 02:24:57 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:57:05 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_bool	grab_right_left(t_philo *philo)
 	return (TRUE);
 }
 
-t_bool	request_for_forks(t_philo *philo)
+t_bool	grab_forks(t_philo *philo)
 {
 	if (philo->table->num_philos == 1)
 	{
