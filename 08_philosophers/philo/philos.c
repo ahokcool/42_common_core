@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 23:53:01 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 19:09:21 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/09 12:26:33 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ini_philos(t_table *table)
 			put_exit_msg(table, "mallocing space for philo", FALSE);
 		pthread_mutex_init(&cur_philo->m_philo, NULL);
 		pthread_mutex_init(&cur_philo->m_fork, NULL);
-		cur_philo->state = SLEEPING;
+		cur_philo->state = THINKING;
 		cur_philo->id = i;
 		cur_philo->count_meals = 0;
 		cur_philo->table = table;
@@ -81,8 +81,13 @@ t_bool	check_if_any_philo_died(t_table *table)
 	cur_philo = table->philos;
 	while (i <= table->num_philos)
 	{
-		if (check_if_alive(cur_philo) == FALSE)
+		if (get_state(cur_philo) == DIED)
 			return (TRUE);
+		if (check_if_alive(cur_philo) == FALSE)
+		{
+			set_state(cur_philo, DIED);
+			return (TRUE);
+		}
 		cur_philo = cur_philo->right_philo;
 		i++;
 	}

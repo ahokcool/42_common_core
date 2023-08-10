@@ -10,14 +10,14 @@ TEST_ARGS_2=5 800 200 200
 TEST_ARGS_3=5 800 200 200 7 | ./tests/count_meals.sh
 TEST_ARGS_4=4 410 200 200
 TEST_ARGS_5=4 310 200 100
-TEST_ARGS_6=2 300 200 100 42	
+TEST_ARGS_6=2 300 50 50 42	
 
 PUT_MORE_INFOS=0			# if 1, print more infos about the program during execution
 
 # Compiler options
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize-address-use-after-scope -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread -DPUT_MORE_INFOS=$(PUT_MORE_INFOS)
 RM = rm -f
 
 # Color codes
@@ -35,12 +35,12 @@ SRCS = \
 	check.c \
 	table.c \
 	lib_utils_1.c \
-	ft_strcat_multi.c \
 	lst.c\
 	msg_values.c \
 	lst_clear.c \
 	free.c \
 	msg.c \
+	forks.c \
 	philo_actions.c
 
 # Object files

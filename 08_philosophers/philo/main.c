@@ -6,15 +6,15 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:20:27 by astein            #+#    #+#             */
-/*   Updated: 2023/08/07 18:02:45 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 02:24:44 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void put_params(t_table *table)
+static void	put_params(t_table *table)
 {
-	if(PUT_MORE_INFOS)
+	if (PUT_MORE_INFOS)
 	{
 		pthread_mutex_lock(&table->m_print);
 		printf("===========================================\n");
@@ -46,8 +46,11 @@ int	main(int argc, char **argv)
 		if (check_if_any_philo_died(table))
 			exit_dining(table, FALSE);
 		if (check_if_all_philo_have_eaten_enough(table))
+		{
+			put_msg_id(table->philos, MSG_ALL_EAT, NO_FORK);
 			exit_dining(table, TRUE);
-		usleep(1000);
+		}
+		usleep(10);
 	}
 }
 

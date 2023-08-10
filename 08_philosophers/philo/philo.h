@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:24:33 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 02:16:05 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@
 # define CLR_NONE ""
 
 # define DIED -1
-# define MSG_ID_DIED -1
+# define MSG_DIED -1
 
-# define MSG_ID_FORK 0
-# define MSG_ID_FORK_DROP 1
+# define MSG_FORK_TAKE 0
+# define MSG_FORK_DROP 1
 
 # define EATING 2
-# define MSG_ID_EAT 2
+# define MSG_EAT 2
 
 # define FINISHED_EATING 3
-# define MSG_ID_FINISHED_EAT 3
+# define MSG_EAT_END 3
 
 # define SLEEPING 4
-# define MSG_ID_SLEEP 4
+# define MSG_SLEEP 4
 
 # define THINKING 5
-# define MSG_ID_THINK 5
+# define MSG_THINK 5
+
+# define MSG_ALL_EAT 6
 
 # define NO_FORK -1
 
@@ -90,6 +92,7 @@ typedef struct s_table
 	long			dur_sleep;
 	int				times_philo_must_eat;
 	int				philos_done_eating;
+	long			min_wait_time;
 }					t_table;
 
 typedef struct s_list
@@ -125,13 +128,18 @@ t_bool				check_if_all_philo_have_eaten_enough(t_table *table);
 // PHILO
 int					get_state(t_philo *philo);
 t_bool				set_state(t_philo *philo, int state);
+int					get_meal_count(t_philo *philo);
+int					get_meal_diff(t_philo *philo);
 void				*life_of_philo(void *arg);
 
 // PHILO ACTIONS
+t_bool				start_eating(t_philo *philo);
+t_bool				start_thinking(t_philo *philo);
+t_bool				start_sleeping(t_philo *philo);
+
+// FORKS.C
 t_bool				request_for_forks(t_philo *philo);
-void				start_eating(t_philo *philo);
-void				start_thinking(t_philo *philo);
-void				start_sleeping(t_philo *philo);
+void				drop_forks(t_philo *philo);
 
 // MSG
 void				put_msg_id(t_philo *philo, int msg_id, int fork);
@@ -148,7 +156,7 @@ void				free_philos(t_table *table);
 void				free_philo(t_philo *philo);
 void				*free_whatever(char *str, ...);
 
-//Time	
+//Time
 long int			get_time_diff_last_meal(t_philo *philo);
 long int			get_time_diff(struct timeval *t1);
 
@@ -158,9 +166,6 @@ void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 size_t				ft_strlen(const char *s);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
-
-// ft_strcat_multi.c
-char				*ft_strcat_multi(int amount_of_strs, ...);
 
 // lst clear
 void				null_ptr(void *nothing);

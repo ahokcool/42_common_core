@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:17:22 by astein            #+#    #+#             */
-/*   Updated: 2023/08/06 06:23:20 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/10 02:23:26 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ long int	get_time_diff_last_meal(t_philo *philo)
 
 long int	get_time_diff(struct timeval *t1)
 {
-	long int		sec;
-	long int		usec;
+	long long int	sec;
+	long long int	usec;
 	struct timeval	t_curr;
 
 	gettimeofday(&t_curr, NULL);
