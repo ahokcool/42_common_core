@@ -13,11 +13,11 @@ this project is a version of the dinning philosopher problem <br>
 | the starvation                    | -> wait for a lap time |
 
 ### the starvation solution
-Every philo can see how many other philos are sitting at the table. Always half of the philos (result rounded down) can eat at the same time (exception: there is only one philo). Since in this variant all philos always eat the same amount of time, it can be calculated how long it takes until all have started to eat once. If each philo now waits until at least this time has passed before he eats again, nobody starves anymore. HOORAY! <br>
+Every philo can see how many other philos are sitting at the table. Always half of the philos (result rounded down) can eat at the same time (exception: there is only one philo). Since in this variant all philos always eat the same amount of time, it can be calculated how long it takes until all have started to eat once. If each philo now waits until at least this time has passed before he eats again, nobody starves anymore. HOORAY! <br><br>
 Formula
-``` table->min_wait_time = ((table->num_philos - (int)(table->num_philos / 2) - 1) * table->dur_eat) + (table->dur_eat * 0.5) ``` 
+``` table->min_wait_time = ((table->num_philos - (int)(table->num_philos / 2) - 1) * table->dur_eat) + (table->dur_eat * 0.5) ``` <br><br>
 Note:<br>
 I noticed that this wastes ```0.5*dur_eat``` ms per food round. So a philo could eat, but he does not.
 So, since I did not come up with a solution, I simply adjusted the formula and waste now only ```5ms```. (which is still not ideal)<br>
-new formula<br>
+New formula<br>
 ``` table->min_wait_time = ((table->num_philos - (int)(table->num_philos / 2) - 1) * table->dur_eat) + 5; ```
