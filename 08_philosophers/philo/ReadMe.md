@@ -9,7 +9,7 @@ this project is a version of the dinning philosopher problem <br>
 | ------------- | ------------- |
 | independent philos                | -> using threads  |
 | race conditions                   | -> using pthread_mutex  |
-| deadlocks                         | [-> resource hierarchy solution]([https://www.mathworks.com/help/simevents/ug/dining-philosophers-problem.html](https://medium.com/science-journal/the-dining-philosophers-problem-fded861c37ed)https://medium.com/science-journal/the-dining-philosophers-problem-fded861c37ed)  |
+| deadlocks                         | [-> resource hierarchy solution](https://medium.com/science-journal/the-dining-philosophers-problem-fded861c37ed)  |
 | the starvation                    | -> wait for a lap time |
 
 ### the starvation solution
