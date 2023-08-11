@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:35:53 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 02:24:35 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/11 01:30:46 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	*life_of_philo(void *arg)
 	philo->t_last_meal = philo->table->t_start;
 	pthread_mutex_unlock(&philo->m_philo);
 	if (philo->id % 2 != 0)
-		usleep((philo->table->dur_eat * 1000) / 27);
+		usleep((philo->table->dur_eat * 1000) / 2);
 	while (get_state(philo) != DIED && !has_ended(philo->table))
 	{
 		if (get_state(philo) == SLEEPING && !start_thinking(philo))

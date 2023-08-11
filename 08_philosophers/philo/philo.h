@@ -6,7 +6,7 @@
 /*   By: astein <astein@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:03:26 by astein            #+#    #+#             */
-/*   Updated: 2023/08/10 16:30:36 by astein           ###   ########.fr       */
+/*   Updated: 2023/08/11 01:28:12 by astein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct s_table
 	long			dur_eat;
 	long			dur_sleep;
 	int				times_philo_must_eat;
-	int				philos_done_eating;
 	long			min_wait_time;
 }					t_table;
 
